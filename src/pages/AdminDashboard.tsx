@@ -1,7 +1,11 @@
 import Layout from "@/components/Layout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, Users, FileText, Bell, ShoppingCart, Activity } from "lucide-react";
+import { Shield, Users, FileText, Bell, ShoppingCart, BarChart3 } from "lucide-react";
+import UserManagement from "./admin/UserManagement";
+import SchemeManagement from "./admin/SchemeManagement";
+import NotificationManagement from "./admin/NotificationManagement";
+import MarketplaceModeration from "./admin/MarketplaceModeration";
+import Reports from "./admin/Reports";
 
 const AdminDashboard = () => {
   return (
@@ -9,114 +13,54 @@ const AdminDashboard = () => {
       <div className="space-y-6">
         <div className="flex items-center gap-3">
           <Shield className="h-8 w-8 text-primary" />
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+          <div>
+            <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+            <p className="text-muted-foreground">Complete system administration and management</p>
+          </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">0</div>
-              <p className="text-xs text-muted-foreground">Registered users</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Animals</CardTitle>
-              <Activity className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">0</div>
-              <p className="text-xs text-muted-foreground">Registered animals</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Listings</CardTitle>
-              <ShoppingCart className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">0</div>
-              <p className="text-xs text-muted-foreground">Marketplace listings</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        <Tabs defaultValue="users" className="space-y-4">
-          <TabsList>
-            <TabsTrigger value="users">
-              <Users className="h-4 w-4 mr-2" />
-              Users
+        <Tabs defaultValue="reports" className="space-y-4">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+            <TabsTrigger value="reports" className="gap-2">
+              <BarChart3 className="h-4 w-4" />
+              <span className="hidden sm:inline">Reports</span>
             </TabsTrigger>
-            <TabsTrigger value="schemes">
-              <FileText className="h-4 w-4 mr-2" />
-              Schemes
+            <TabsTrigger value="users" className="gap-2">
+              <Users className="h-4 w-4" />
+              <span className="hidden sm:inline">Users</span>
             </TabsTrigger>
-            <TabsTrigger value="notifications">
-              <Bell className="h-4 w-4 mr-2" />
-              Notifications
+            <TabsTrigger value="schemes" className="gap-2">
+              <FileText className="h-4 w-4" />
+              <span className="hidden sm:inline">Schemes</span>
             </TabsTrigger>
-            <TabsTrigger value="marketplace">
-              <ShoppingCart className="h-4 w-4 mr-2" />
-              Marketplace
+            <TabsTrigger value="notifications" className="gap-2">
+              <Bell className="h-4 w-4" />
+              <span className="hidden sm:inline">Notifications</span>
+            </TabsTrigger>
+            <TabsTrigger value="marketplace" className="gap-2">
+              <ShoppingCart className="h-4 w-4" />
+              <span className="hidden sm:inline">Marketplace</span>
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="users" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>User Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Manage user accounts, roles, and permissions
-                </p>
-              </CardContent>
-            </Card>
+          <TabsContent value="reports">
+            <Reports />
           </TabsContent>
 
-          <TabsContent value="schemes" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Government Schemes Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Add, edit, and manage government schemes and subsidies
-                </p>
-              </CardContent>
-            </Card>
+          <TabsContent value="users">
+            <UserManagement />
           </TabsContent>
 
-          <TabsContent value="notifications" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Notification Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Send push notifications and alerts to users
-                </p>
-              </CardContent>
-            </Card>
+          <TabsContent value="schemes">
+            <SchemeManagement />
           </TabsContent>
 
-          <TabsContent value="marketplace" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Marketplace Moderation</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Review and moderate marketplace listings
-                </p>
-              </CardContent>
-            </Card>
+          <TabsContent value="notifications">
+            <NotificationManagement />
+          </TabsContent>
+
+          <TabsContent value="marketplace">
+            <MarketplaceModeration />
           </TabsContent>
         </Tabs>
       </div>
