@@ -6,13 +6,16 @@ import type { Enums } from "@/integrations/supabase/types";
 type UserRole = Enums<"app_role">;
 
 export const useUserRole = () => {
-  const { user } = useAuth();
+  const { user, impersonatedUserId, isImpersonating } = useAuth();
   const [roles, setRoles] = useState<UserRole[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserRoles = async () => {
-      if (!user) {
+      // Use impersonated user ID if impersonating, otherwise use actual user
+      const targetUserId = isImpersonating ? impersonatedUserId : user?.id;
+      
+      if (!targetUserId) {
         setRoles([]);
         setLoading(false);
         return;
@@ -21,7 +24,7 @@ export const useUserRole = () => {
       const { data, error } = await supabase
         .from("user_roles")
         .select("role")
-        .eq("user_id", user.id);
+        .eq("user_id", targetUserId);
 
       if (error) {
         console.error("Error fetching user roles:", error);
@@ -34,7 +37,7 @@ export const useUserRole = () => {
     };
 
     fetchUserRoles();
-  }, [user]);
+  }, [user, impersonatedUserId, isImpersonating]);
 
   const hasRole = (role: UserRole) => roles.includes(role);
   const isAdmin = hasRole("admin");

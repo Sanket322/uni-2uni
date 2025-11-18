@@ -7,10 +7,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Search, UserPlus, Edit, Mail, Phone, Calendar } from "lucide-react";
+import { Search, UserPlus, Edit, Mail, Phone, Calendar, UserCog } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { Enums } from "@/integrations/supabase/types";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 type UserRole = Enums<"app_role">;
 
@@ -36,6 +38,8 @@ const UserManagement = () => {
   const [newAdminEmail, setNewAdminEmail] = useState("");
   const [newAdminName, setNewAdminName] = useState("");
   const { toast } = useToast();
+  const { startImpersonation } = useAuth();
+  const navigate = useNavigate();
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -355,16 +359,33 @@ const UserManagement = () => {
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => {
-                            setSelectedUser(user);
-                            setEditDialogOpen(true);
-                          }}
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              startImpersonation(user.id);
+                              toast({
+                                title: "Impersonating User",
+                                description: `Now viewing as ${user.full_name}`,
+                              });
+                              navigate("/dashboard");
+                            }}
+                          >
+                            <UserCog className="h-4 w-4 mr-1" />
+                            Impersonate
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              setSelectedUser(user);
+                              setEditDialogOpen(true);
+                            }}
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))

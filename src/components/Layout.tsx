@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import LanguageSelector from "@/components/LanguageSelector";
 import { useUserRole } from "@/hooks/useUserRole";
+import { ImpersonationBanner } from "@/components/ImpersonationBanner";
 import {
   Home,
   PawPrint,
@@ -77,7 +78,9 @@ const Layout = ({ children }: LayoutProps) => {
   );
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <>
+      <ImpersonationBanner />
+      <div className="flex min-h-screen bg-background">
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex lg:flex-col lg:w-64 border-r bg-card">
         <div className="flex items-center gap-2 p-6 border-b">
@@ -188,6 +191,7 @@ const Layout = ({ children }: LayoutProps) => {
         </main>
       </div>
     </div>
+    </>
   );
 };
 
