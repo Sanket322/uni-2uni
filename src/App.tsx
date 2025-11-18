@@ -30,6 +30,7 @@ import Analytics from "./pages/Analytics";
 import AdminDashboard from "./pages/AdminDashboard";
 import ReportsPage from "./pages/admin/ReportsPage";
 import UsersPage from "./pages/admin/UsersPage";
+import UserActivityPage from "./pages/admin/UserActivityPage";
 import SubscriptionsPage from "./pages/admin/SubscriptionsPage";
 import SchemesPage from "./pages/admin/SchemesPage";
 import ContentPage from "./pages/admin/ContentPage";
@@ -152,6 +153,16 @@ const App = () => (
                 <ProtectedRoute>
                   <RoleBasedRoute allowedRoles={["admin"]}>
                     <UsersPage />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/user-activity"
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["admin"]}>
+                    <UserActivityPage />
                   </RoleBasedRoute>
                 </ProtectedRoute>
               }

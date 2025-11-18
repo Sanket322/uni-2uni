@@ -21,6 +21,7 @@ import {
   Bell,
   BarChart3,
   Shield,
+  Activity,
 } from "lucide-react";
 
 const adminMenuItems = [
@@ -40,6 +41,12 @@ const adminMenuItems = [
     title: "User Management",
     url: "/admin/users",
     icon: Users,
+    group: "Users & Access",
+  },
+  {
+    title: "User Activity",
+    url: "/admin/user-activity",
+    icon: Activity,
     group: "Users & Access",
   },
   {
