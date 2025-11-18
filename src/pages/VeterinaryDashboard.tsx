@@ -10,6 +10,9 @@ import { useToast } from "@/hooks/use-toast";
 import { Activity, Users, Syringe, ClipboardList, AlertCircle, Calendar, TrendingUp, FileText, Plus } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import CriticalAlerts from "@/components/CriticalAlerts";
+import DiseaseTracking from "@/components/DiseaseTracking";
+import VaccinationReminders from "@/components/VaccinationReminders";
 
 const VeterinaryDashboard = () => {
   const navigate = useNavigate();
@@ -202,6 +205,12 @@ const VeterinaryDashboard = () => {
               <p className="text-xs text-muted-foreground">Health records added</p>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Real-time Monitoring Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <CriticalAlerts />
+          <VaccinationReminders />
         </div>
 
         {/* Tabs for different sections */}

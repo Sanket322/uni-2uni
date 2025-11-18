@@ -34,6 +34,8 @@ import Plans from "./pages/Plans";
 import RoleBasedRoute from "./components/RoleBasedRoute";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AddHealthRecord from "./pages/vet/AddHealthRecord";
+import AddVaccination from "./pages/vet/AddVaccination";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +70,26 @@ const App = () => (
                 <ProtectedRoute>
                   <RoleBasedRoute allowedRoles={["program_coordinator", "admin"]}>
                     <CoordinatorDashboard />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/vet/add-health-record" 
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["veterinary_officer", "admin"]}>
+                    <AddHealthRecord />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/vet/add-vaccination" 
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["veterinary_officer", "admin"]}>
+                    <AddVaccination />
                   </RoleBasedRoute>
                 </ProtectedRoute>
               } 
