@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import FarmerLayout from "@/components/FarmerLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -55,7 +55,7 @@ const AIDoctor = () => {
   };
 
   return (
-    <Layout>
+    <FarmerLayout>
       <div className="space-y-6 max-w-4xl mx-auto">
         <div className="flex items-center gap-3">
           <Bot className="h-8 w-8 text-primary" />
@@ -185,7 +185,7 @@ const AIDoctor = () => {
           </CardContent>
         </Card>
       </div>
-    </Layout>
+    </FarmerLayout>
   );
 };
 

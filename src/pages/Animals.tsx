@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Layout from "@/components/Layout";
+import FarmerLayout from "@/components/FarmerLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -41,7 +41,7 @@ const Animals = () => {
   );
 
   return (
-    <Layout>
+    <FarmerLayout>
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div>
@@ -127,7 +127,7 @@ const Animals = () => {
           </Card>
         )}
       </div>
-    </Layout>
+    </FarmerLayout>
   );
 };
 
