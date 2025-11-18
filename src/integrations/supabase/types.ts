@@ -462,6 +462,7 @@ export type Database = {
           district: string | null
           full_name: string
           id: string
+          onboarding_completed: boolean | null
           phone_number: string | null
           pin_code: string | null
           preferred_language: string | null
@@ -474,6 +475,7 @@ export type Database = {
           district?: string | null
           full_name: string
           id: string
+          onboarding_completed?: boolean | null
           phone_number?: string | null
           pin_code?: string | null
           preferred_language?: string | null
@@ -486,6 +488,7 @@ export type Database = {
           district?: string | null
           full_name?: string
           id?: string
+          onboarding_completed?: boolean | null
           phone_number?: string | null
           pin_code?: string | null
           preferred_language?: string | null
