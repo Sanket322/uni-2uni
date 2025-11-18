@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Layout from "@/components/Layout";
+import FarmerLayout from "@/components/FarmerLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -84,7 +84,7 @@ const Dashboard = () => {
   };
 
   return (
-    <Layout>
+    <FarmerLayout>
       <div className="space-y-8">
         {/* Header */}
         <div className="flex justify-between items-center">
@@ -256,7 +256,7 @@ const Dashboard = () => {
           </Card>
         </div>
       </div>
-    </Layout>
+    </FarmerLayout>
   );
 };
 
