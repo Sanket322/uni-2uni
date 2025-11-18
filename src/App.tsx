@@ -39,6 +39,7 @@ import AddHealthRecord from "./pages/vet/AddHealthRecord";
 import AddVaccination from "./pages/vet/AddVaccination";
 import Onboarding from "./pages/Onboarding";
 import ContentLibrary from "./pages/ContentLibrary";
+import DemoLogin from "./pages/DemoLogin";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +58,7 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin-login" element={<AdminAuth />} />
+            <Route path="/demo-login" element={<DemoLogin />} />
             <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route 
