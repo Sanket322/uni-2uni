@@ -9,13 +9,25 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import type { Database } from "@/integrations/supabase/types";
+
+type AnimalGender = Database["public"]["Enums"]["animal_gender"];
+type AnimalSpecies = Database["public"]["Enums"]["animal_species"];
 
 const AddAnimal = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    name: string;
+    species: AnimalSpecies | "";
+    breed: string;
+    gender: AnimalGender | "";
+    date_of_birth: string;
+    identification_number: string;
+    location: string;
+  }>({
     name: "",
     species: "",
     breed: "",
@@ -27,11 +39,24 @@ const AddAnimal = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return;
+    if (!user || !formData.species || !formData.gender) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields",
+        variant: "destructive",
+      });
+      return;
+    }
 
     setLoading(true);
     const { error } = await supabase.from("animals").insert([{
-      ...formData,
+      name: formData.name,
+      species: formData.species as AnimalSpecies,
+      breed: formData.breed,
+      gender: formData.gender as AnimalGender,
+      date_of_birth: formData.date_of_birth || null,
+      identification_number: formData.identification_number,
+      location: formData.location,
       owner_id: user.id,
     }]);
 
@@ -76,7 +101,7 @@ const AddAnimal = () => {
                 <Label htmlFor="species">Species *</Label>
                 <Select
                   value={formData.species}
-                  onValueChange={(value) => setFormData({ ...formData, species: value })}
+                  onValueChange={(value) => setFormData({ ...formData, species: value as AnimalSpecies })}
                   required
                 >
                   <SelectTrigger>
@@ -108,7 +133,7 @@ const AddAnimal = () => {
                 <Label htmlFor="gender">Gender</Label>
                 <Select
                   value={formData.gender}
-                  onValueChange={(value) => setFormData({ ...formData, gender: value })}
+                  onValueChange={(value) => setFormData({ ...formData, gender: value as AnimalGender })}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select gender" />
