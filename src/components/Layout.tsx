@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import LanguageSelector from "@/components/LanguageSelector";
+import { useUserRole } from "@/hooks/useUserRole";
 import {
   Home,
   PawPrint,
@@ -28,24 +29,25 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: Home },
-  { name: "My Animals", href: "/animals", icon: PawPrint },
-  { name: "Health Records", href: "/health", icon: Heart },
-  { name: "Vaccinations", href: "/vaccinations", icon: Syringe },
-  { name: "Breeding", href: "/breeding", icon: Baby },
-  { name: "Feeding", href: "/feeding", icon: UtensilsCrossed },
-  { name: "Marketplace", href: "/marketplace", icon: ShoppingCart },
-  { name: "AI Pashu Doctor", href: "/ai-doctor", icon: Bot },
-  { name: "Gov. Schemes", href: "/schemes", icon: FileText },
-  { name: "Emergency", href: "/emergency", icon: Phone },
-  { name: "Analytics", href: "/analytics", icon: BarChart3 },
-  { name: "Admin", href: "/admin", icon: Shield },
-];
-
 const Layout = ({ children }: LayoutProps) => {
   const { signOut } = useAuth();
+  const { isAdmin, loading } = useUserRole();
   const location = useLocation();
+
+  const navigation = [
+    { name: "Dashboard", href: "/dashboard", icon: Home },
+    { name: "My Animals", href: "/animals", icon: PawPrint },
+    { name: "Health Records", href: "/health", icon: Heart },
+    { name: "Vaccinations", href: "/vaccinations", icon: Syringe },
+    { name: "Breeding", href: "/breeding", icon: Baby },
+    { name: "Feeding", href: "/feeding", icon: UtensilsCrossed },
+    { name: "Marketplace", href: "/marketplace", icon: ShoppingCart },
+    { name: "AI Pashu Doctor", href: "/ai-doctor", icon: Bot },
+    { name: "Gov. Schemes", href: "/schemes", icon: FileText },
+    { name: "Emergency", href: "/emergency", icon: Phone },
+    { name: "Analytics", href: "/analytics", icon: BarChart3 },
+    ...(isAdmin ? [{ name: "Admin", href: "/admin", icon: Shield }] : []),
+  ];
 
   const NavLinks = () => (
     <>
