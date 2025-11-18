@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
+import LanguageSelector from "@/components/LanguageSelector";
 import {
   Home,
   PawPrint,
@@ -18,6 +19,7 @@ import {
   BarChart3,
   LogOut,
   Menu,
+  Shield,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -38,6 +40,7 @@ const navigation = [
   { name: "Gov. Schemes", href: "/schemes", icon: FileText },
   { name: "Emergency", href: "/emergency", icon: Phone },
   { name: "Analytics", href: "/analytics", icon: BarChart3 },
+  { name: "Admin", href: "/admin", icon: Shield },
 ];
 
 const Layout = ({ children }: LayoutProps) => {
@@ -88,6 +91,7 @@ const Layout = ({ children }: LayoutProps) => {
         </ScrollArea>
 
         <div className="p-4 border-t space-y-2">
+          <LanguageSelector />
           <Link to="/profile">
             <Button variant="outline" className="w-full justify-start">
               <User className="mr-2 h-4 w-4" />
@@ -122,6 +126,7 @@ const Layout = ({ children }: LayoutProps) => {
           </div>
           
           <div className="flex items-center gap-2">
+            <LanguageSelector />
             <Link to="/notifications">
               <Button variant="ghost" size="icon">
                 <Bell className="h-5 w-5" />
@@ -151,6 +156,7 @@ const Layout = ({ children }: LayoutProps) => {
                 </ScrollArea>
 
                 <div className="absolute bottom-0 left-0 right-0 p-4 border-t bg-card space-y-2">
+                  <LanguageSelector />
                   <Link to="/profile">
                     <Button variant="outline" className="w-full justify-start">
                       <User className="mr-2 h-4 w-4" />
