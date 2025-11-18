@@ -26,7 +26,6 @@ const VeterinaryDashboard = () => {
   });
   const [recentCases, setRecentCases] = useState<any[]>([]);
   const [upcomingVaccinations, setUpcomingVaccinations] = useState<any[]>([]);
-  const [diseaseStats, setDiseaseStats] = useState<any[]>([]);
 
   useEffect(() => {
     fetchDashboardData();
@@ -99,26 +98,6 @@ const VeterinaryDashboard = () => {
         .limit(10);
 
       setUpcomingVaccinations(vaccinations || []);
-
-      // Fetch disease statistics
-      const { data: diseases } = await supabase
-        .from("health_records")
-        .select("diagnosis")
-        .not("diagnosis", "is", null);
-
-      const diseaseCount: { [key: string]: number } = {};
-      diseases?.forEach((record) => {
-        if (record.diagnosis) {
-          diseaseCount[record.diagnosis] = (diseaseCount[record.diagnosis] || 0) + 1;
-        }
-      });
-
-      const diseaseArray = Object.entries(diseaseCount)
-        .map(([name, count]) => ({ name, count }))
-        .sort((a, b) => b.count - a.count)
-        .slice(0, 5);
-
-      setDiseaseStats(diseaseArray);
     } catch (error: any) {
       toast({
         title: "Error",
@@ -348,31 +327,7 @@ const VeterinaryDashboard = () => {
           </TabsContent>
 
           <TabsContent value="analytics" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Disease Statistics</CardTitle>
-                <CardDescription>Most common diseases in the region</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {diseaseStats.length === 0 ? (
-                    <p className="text-center text-muted-foreground">No disease data available</p>
-                  ) : (
-                    diseaseStats.map((disease, index) => (
-                      <div key={disease.name} className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-semibold">
-                            {index + 1}
-                          </div>
-                          <span className="font-medium">{disease.name}</span>
-                        </div>
-                        <Badge variant="secondary">{disease.count} cases</Badge>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+            <DiseaseTracking />
 
             <Card>
               <CardHeader>
