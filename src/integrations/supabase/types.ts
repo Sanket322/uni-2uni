@@ -156,6 +156,107 @@ export type Database = {
           },
         ]
       }
+      cms_content: {
+        Row: {
+          category: Database["public"]["Enums"]["content_category"]
+          content_body: string | null
+          content_type: Database["public"]["Enums"]["content_type"]
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          district: string | null
+          download_url: string | null
+          id: string
+          is_active: boolean | null
+          is_featured: boolean | null
+          language: string | null
+          media_url: string | null
+          published_date: string | null
+          species: string[] | null
+          state: string | null
+          tags: string[] | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string | null
+          view_count: number | null
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["content_category"]
+          content_body?: string | null
+          content_type: Database["public"]["Enums"]["content_type"]
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          district?: string | null
+          download_url?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          language?: string | null
+          media_url?: string | null
+          published_date?: string | null
+          species?: string[] | null
+          state?: string | null
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string | null
+          view_count?: number | null
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["content_category"]
+          content_body?: string | null
+          content_type?: Database["public"]["Enums"]["content_type"]
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          district?: string | null
+          download_url?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          language?: string | null
+          media_url?: string | null
+          published_date?: string | null
+          species?: string[] | null
+          state?: string | null
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string | null
+          view_count?: number | null
+        }
+        Relationships: []
+      }
+      content_views: {
+        Row: {
+          content_id: string | null
+          id: string
+          user_id: string | null
+          viewed_at: string | null
+        }
+        Insert: {
+          content_id?: string | null
+          id?: string
+          user_id?: string | null
+          viewed_at?: string | null
+        }
+        Update: {
+          content_id?: string | null
+          id?: string
+          user_id?: string | null
+          viewed_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_views_content_id_fkey"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "cms_content"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       emergency_contacts: {
         Row: {
           contact_name: string
@@ -710,6 +811,24 @@ export type Database = {
         | "veterinary_officer"
         | "program_coordinator"
         | "admin"
+      content_category:
+        | "feeding_guidelines"
+        | "shelter_management"
+        | "breeding_tips"
+        | "health_advisory"
+        | "training_resources"
+        | "emergency_alerts"
+        | "disease_prevention"
+        | "weather_advisory"
+        | "best_practices"
+      content_type:
+        | "article"
+        | "video"
+        | "infographic"
+        | "document"
+        | "audio"
+        | "webinar"
+        | "tutorial"
       health_status:
         | "healthy"
         | "sick"
@@ -860,6 +979,26 @@ export const Constants = {
         "veterinary_officer",
         "program_coordinator",
         "admin",
+      ],
+      content_category: [
+        "feeding_guidelines",
+        "shelter_management",
+        "breeding_tips",
+        "health_advisory",
+        "training_resources",
+        "emergency_alerts",
+        "disease_prevention",
+        "weather_advisory",
+        "best_practices",
+      ],
+      content_type: [
+        "article",
+        "video",
+        "infographic",
+        "document",
+        "audio",
+        "webinar",
+        "tutorial",
       ],
       health_status: [
         "healthy",

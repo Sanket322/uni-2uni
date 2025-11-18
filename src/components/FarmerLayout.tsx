@@ -8,7 +8,7 @@ import { NavLink } from "@/components/NavLink";
 import { 
   Menu, Home, Beef, Heart, Syringe, Calendar, 
   ShoppingCart, MessageSquare, Award, Bell, 
-  User, LogOut, CreditCard
+  User, LogOut, CreditCard, BookOpen
 } from "lucide-react";
 
 interface FarmerLayoutProps {
@@ -29,6 +29,7 @@ const FarmerLayout = ({ children }: FarmerLayoutProps) => {
     { name: "Breeding", href: "/breeding", icon: Calendar },
     { name: "Marketplace", href: "/marketplace", icon: ShoppingCart },
     { name: "AI Doctor", href: "/ai-doctor", icon: MessageSquare },
+    { name: "Resources", href: "/resources", icon: BookOpen },
     { name: "Schemes", href: "/schemes", icon: Award },
     { name: "Plans", href: "/plans", icon: CreditCard },
   ];

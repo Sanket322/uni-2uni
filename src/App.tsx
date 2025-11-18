@@ -38,6 +38,7 @@ import OnboardingGuard from "./components/OnboardingGuard";
 import AddHealthRecord from "./pages/vet/AddHealthRecord";
 import AddVaccination from "./pages/vet/AddVaccination";
 import Onboarding from "./pages/Onboarding";
+import ContentLibrary from "./pages/ContentLibrary";
 
 const queryClient = new QueryClient();
 
@@ -110,6 +111,7 @@ const App = () => (
             <Route path="/ai-doctor" element={<ProtectedRoute><AIDoctor /></ProtectedRoute>} />
             <Route path="/schemes" element={<ProtectedRoute><Schemes /></ProtectedRoute>} />
             <Route path="/schemes/:id" element={<ProtectedRoute><SchemeDetails /></ProtectedRoute>} />
+            <Route path="/resources" element={<ProtectedRoute><ContentLibrary /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
             <Route path="/emergency" element={<ProtectedRoute><Emergency /></ProtectedRoute>} />
