@@ -28,6 +28,13 @@ import Notifications from "./pages/Notifications";
 import Emergency from "./pages/Emergency";
 import Analytics from "./pages/Analytics";
 import AdminDashboard from "./pages/AdminDashboard";
+import ReportsPage from "./pages/admin/ReportsPage";
+import UsersPage from "./pages/admin/UsersPage";
+import SubscriptionsPage from "./pages/admin/SubscriptionsPage";
+import SchemesPage from "./pages/admin/SchemesPage";
+import ContentPage from "./pages/admin/ContentPage";
+import MarketplacePage from "./pages/admin/MarketplacePage";
+import NotificationsPage from "./pages/admin/NotificationsPage";
 import VeterinaryDashboard from "./pages/VeterinaryDashboard";
 import CoordinatorDashboard from "./pages/CoordinatorDashboard";
 import Plans from "./pages/Plans";
@@ -125,6 +132,76 @@ const App = () => (
                 <ProtectedRoute>
                   <RoleBasedRoute allowedRoles={["admin"]}>
                     <AdminDashboard />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/reports"
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["admin"]}>
+                    <ReportsPage />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/users"
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["admin"]}>
+                    <UsersPage />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/subscriptions"
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["admin"]}>
+                    <SubscriptionsPage />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/schemes"
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["admin"]}>
+                    <SchemesPage />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/content"
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["admin"]}>
+                    <ContentPage />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/marketplace"
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["admin"]}>
+                    <MarketplacePage />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/notifications"
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["admin"]}>
+                    <NotificationsPage />
                   </RoleBasedRoute>
                 </ProtectedRoute>
               }
