@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Sprout } from "lucide-react";
+import { Sprout, ArrowLeft, User } from "lucide-react";
 import { z } from "zod";
 
 const loginSchema = z.object({
@@ -36,9 +36,16 @@ const Auth = () => {
     password: "",
     confirmPassword: "",
   });
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -112,18 +119,24 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
-      <Card className="w-full max-w-md shadow-xl">
-        <CardHeader className="text-center">
-          <div className="flex justify-center mb-4">
-            <div className="bg-gradient-primary rounded-full p-3">
-              <Sprout className="h-8 w-8 text-white" />
+      <div className="w-full max-w-md">
+        <Link to="/" className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors">
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back to Home
+        </Link>
+        
+        <Card className="shadow-xl">
+          <CardHeader className="text-center">
+            <div className="flex justify-center mb-4">
+              <div className="bg-gradient-primary rounded-full p-3">
+                <User className="h-8 w-8 text-white" />
+              </div>
             </div>
-          </div>
-          <CardTitle className="text-2xl">Animal Information System</CardTitle>
-          <CardDescription>Manage your livestock with ease</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Tabs defaultValue="login" className="w-full">
+            <CardTitle className="text-2xl">Farmer Portal</CardTitle>
+            <CardDescription>Join the Animal Information System for livestock management</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Tabs defaultValue="login" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="login">Login</TabsTrigger>
               <TabsTrigger value="signup">Sign Up</TabsTrigger>
@@ -222,6 +235,7 @@ const Auth = () => {
         </CardContent>
       </Card>
     </div>
+  </div>
   );
 };
 
