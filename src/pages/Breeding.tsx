@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Layout from "@/components/Layout";
+import FarmerLayout from "@/components/FarmerLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -130,7 +130,7 @@ const Breeding = () => {
   };
 
   return (
-    <Layout>
+    <FarmerLayout>
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div>
@@ -347,7 +347,7 @@ const Breeding = () => {
           </Card>
         )}
       </div>
-    </Layout>
+    </FarmerLayout>
   );
 };
 

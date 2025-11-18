@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import FarmerLayout from "@/components/FarmerLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -39,7 +39,7 @@ const Marketplace = () => {
   };
 
   return (
-    <Layout>
+    <FarmerLayout>
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -100,7 +100,7 @@ const Marketplace = () => {
           </div>
         )}
       </div>
-    </Layout>
+    </FarmerLayout>
   );
 };
 

@@ -1,11 +1,12 @@
 import Layout from "@/components/Layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, Users, FileText, Bell, ShoppingCart, BarChart3 } from "lucide-react";
+import { Shield, Users, FileText, Bell, ShoppingCart, BarChart3, CreditCard } from "lucide-react";
 import UserManagement from "./admin/UserManagement";
 import SchemeManagement from "./admin/SchemeManagement";
 import NotificationManagement from "./admin/NotificationManagement";
 import MarketplaceModeration from "./admin/MarketplaceModeration";
 import Reports from "./admin/Reports";
+import SubscriptionManagement from "./admin/SubscriptionManagement";
 
 const AdminDashboard = () => {
   return (
@@ -20,7 +21,7 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="reports" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
             <TabsTrigger value="reports" className="gap-2">
               <BarChart3 className="h-4 w-4" />
               <span className="hidden sm:inline">Reports</span>
@@ -28,6 +29,10 @@ const AdminDashboard = () => {
             <TabsTrigger value="users" className="gap-2">
               <Users className="h-4 w-4" />
               <span className="hidden sm:inline">Users</span>
+            </TabsTrigger>
+            <TabsTrigger value="subscriptions" className="gap-2">
+              <CreditCard className="h-4 w-4" />
+              <span className="hidden sm:inline">Subscriptions</span>
             </TabsTrigger>
             <TabsTrigger value="schemes" className="gap-2">
               <FileText className="h-4 w-4" />
@@ -49,6 +54,10 @@ const AdminDashboard = () => {
 
           <TabsContent value="users">
             <UserManagement />
+          </TabsContent>
+
+          <TabsContent value="subscriptions">
+            <SubscriptionManagement />
           </TabsContent>
 
           <TabsContent value="schemes">
