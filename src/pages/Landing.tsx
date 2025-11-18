@@ -58,6 +58,11 @@ const Landing = () => {
             <Link to="#contact" className="text-sm font-medium hover:text-primary">
               Contact
             </Link>
+            <Link to="/demo-login">
+              <Button variant="secondary" size="sm" className="gap-2">
+                Demo Login
+              </Button>
+            </Link>
             <Link to="/admin-login">
               <Button variant="outline" size="sm" className="gap-2">
                 <Shield className="h-4 w-4" />
