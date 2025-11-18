@@ -1,8 +1,9 @@
 import Layout from "@/components/Layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, Users, FileText, Bell, ShoppingCart, BarChart3, CreditCard } from "lucide-react";
+import { Shield, Users, FileText, Bell, ShoppingCart, BarChart3, CreditCard, BookOpen } from "lucide-react";
 import UserManagement from "./admin/UserManagement";
 import SchemeManagement from "./admin/SchemeManagement";
+import ContentManagement from "./admin/ContentManagement";
 import NotificationManagement from "./admin/NotificationManagement";
 import MarketplaceModeration from "./admin/MarketplaceModeration";
 import Reports from "./admin/Reports";
@@ -38,6 +39,10 @@ const AdminDashboard = () => {
               <FileText className="h-4 w-4" />
               <span className="hidden sm:inline">Schemes</span>
             </TabsTrigger>
+            <TabsTrigger value="content" className="gap-2">
+              <BookOpen className="h-4 w-4" />
+              <span className="hidden sm:inline">Content</span>
+            </TabsTrigger>
             <TabsTrigger value="notifications" className="gap-2">
               <Bell className="h-4 w-4" />
               <span className="hidden sm:inline">Notifications</span>
@@ -62,6 +67,10 @@ const AdminDashboard = () => {
 
           <TabsContent value="schemes">
             <SchemeManagement />
+          </TabsContent>
+
+          <TabsContent value="content">
+            <ContentManagement />
           </TabsContent>
 
           <TabsContent value="notifications">
