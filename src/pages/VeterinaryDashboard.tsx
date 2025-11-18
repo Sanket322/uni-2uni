@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Activity, Users, Syringe, ClipboardList, AlertCircle, Calendar, TrendingUp, FileText } from "lucide-react";
+import { Activity, Users, Syringe, ClipboardList, AlertCircle, Calendar, TrendingUp, FileText, Plus } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -145,10 +145,16 @@ const VeterinaryDashboard = () => {
             <h1 className="text-3xl font-bold text-foreground">Veterinary Officer Portal</h1>
             <p className="text-muted-foreground mt-1">Manage animal health and medical operations</p>
           </div>
-          <Button onClick={() => navigate("/health")}>
-            <ClipboardList className="mr-2 h-4 w-4" />
-            Add Health Record
-          </Button>
+          <div className="flex gap-2">
+            <Button onClick={() => navigate("/vet/add-health-record")}>
+              <Plus className="mr-2 h-4 w-4" />
+              Add Health Record
+            </Button>
+            <Button onClick={() => navigate("/vet/add-vaccination")} variant="outline">
+              <Syringe className="mr-2 h-4 w-4" />
+              Add Vaccination
+            </Button>
+          </div>
         </div>
 
         {/* Stats Cards */}
