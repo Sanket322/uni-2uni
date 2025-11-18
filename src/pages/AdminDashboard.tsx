@@ -22,7 +22,7 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="reports" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
             <TabsTrigger value="reports" className="gap-2">
               <BarChart3 className="h-4 w-4" />
               <span className="hidden sm:inline">Reports</span>
@@ -43,13 +43,13 @@ const AdminDashboard = () => {
               <BookOpen className="h-4 w-4" />
               <span className="hidden sm:inline">Content</span>
             </TabsTrigger>
-            <TabsTrigger value="notifications" className="gap-2">
-              <Bell className="h-4 w-4" />
-              <span className="hidden sm:inline">Notifications</span>
-            </TabsTrigger>
             <TabsTrigger value="marketplace" className="gap-2">
               <ShoppingCart className="h-4 w-4" />
               <span className="hidden sm:inline">Marketplace</span>
+            </TabsTrigger>
+            <TabsTrigger value="notifications" className="gap-2">
+              <Bell className="h-4 w-4" />
+              <span className="hidden sm:inline">Notifications</span>
             </TabsTrigger>
           </TabsList>
 
@@ -73,12 +73,12 @@ const AdminDashboard = () => {
             <ContentManagement />
           </TabsContent>
 
-          <TabsContent value="notifications">
-            <NotificationManagement />
-          </TabsContent>
-
           <TabsContent value="marketplace">
             <MarketplaceModeration />
+          </TabsContent>
+
+          <TabsContent value="notifications">
+            <NotificationManagement />
           </TabsContent>
         </Tabs>
       </div>
