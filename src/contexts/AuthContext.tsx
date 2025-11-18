@@ -7,9 +7,13 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
+  impersonatedUserId: string | null;
+  isImpersonating: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string, fullName: string, phoneNumber: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
+  startImpersonation: (userId: string) => void;
+  stopImpersonation: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -18,6 +22,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [impersonatedUserId, setImpersonatedUserId] = useState<string | null>(null);
+  const [isImpersonating, setIsImpersonating] = useState(false);
 
   useEffect(() => {
     // Set up auth state listener
@@ -65,11 +71,34 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signOut = async () => {
+    setImpersonatedUserId(null);
+    setIsImpersonating(false);
     await supabase.auth.signOut();
   };
 
+  const startImpersonation = (userId: string) => {
+    setImpersonatedUserId(userId);
+    setIsImpersonating(true);
+  };
+
+  const stopImpersonation = () => {
+    setImpersonatedUserId(null);
+    setIsImpersonating(false);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, session, loading, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      session, 
+      loading, 
+      impersonatedUserId,
+      isImpersonating,
+      signIn, 
+      signUp, 
+      signOut,
+      startImpersonation,
+      stopImpersonation
+    }}>
       {children}
     </AuthContext.Provider>
   );

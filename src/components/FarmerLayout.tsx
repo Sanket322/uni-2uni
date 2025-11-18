@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import LanguageSelector from "@/components/LanguageSelector";
 import { NavLink } from "@/components/NavLink";
+import { ImpersonationBanner } from "@/components/ImpersonationBanner";
 import { 
   Menu, Home, Beef, Heart, Syringe, Calendar, 
   ShoppingCart, MessageSquare, Award, Bell, 
@@ -58,6 +59,7 @@ const FarmerLayout = ({ children }: FarmerLayoutProps) => {
 
   return (
     <div className="min-h-screen bg-background">
+      <ImpersonationBanner />
       {/* Mobile Header */}
       <header className="lg:hidden sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="flex h-16 items-center justify-between px-4">

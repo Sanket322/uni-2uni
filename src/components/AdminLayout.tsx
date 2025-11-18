@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { LogOut, Menu } from "lucide-react";
+import { ImpersonationBanner } from "@/components/ImpersonationBanner";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -21,6 +22,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 
   return (
     <SidebarProvider defaultOpen={true}>
+      <ImpersonationBanner />
       <div className="flex min-h-screen w-full">
         <AdminSidebar />
         
