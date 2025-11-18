@@ -34,8 +34,10 @@ import Plans from "./pages/Plans";
 import RoleBasedRoute from "./components/RoleBasedRoute";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
+import OnboardingGuard from "./components/OnboardingGuard";
 import AddHealthRecord from "./pages/vet/AddHealthRecord";
 import AddVaccination from "./pages/vet/AddVaccination";
+import Onboarding from "./pages/Onboarding";
 
 const queryClient = new QueryClient();
 
@@ -46,13 +48,15 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
+          <OnboardingGuard>
+            <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/app" element={<Index />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin-login" element={<AdminAuth />} />
+            <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route 
               path="/veterinary-dashboard" 
@@ -122,7 +126,8 @@ const App = () => (
               }
             />
             <Route path="*" element={<NotFound />} />
-          </Routes>
+            </Routes>
+          </OnboardingGuard>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
