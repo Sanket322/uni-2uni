@@ -27,6 +27,8 @@ import Notifications from "./pages/Notifications";
 import Emergency from "./pages/Emergency";
 import Analytics from "./pages/Analytics";
 import AdminDashboard from "./pages/AdminDashboard";
+import VeterinaryDashboard from "./pages/VeterinaryDashboard";
+import CoordinatorDashboard from "./pages/CoordinatorDashboard";
 import RoleBasedRoute from "./components/RoleBasedRoute";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -47,6 +49,26 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route 
+              path="/veterinary-dashboard" 
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["veterinary_officer", "admin"]}>
+                    <VeterinaryDashboard />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/coordinator-dashboard" 
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["program_coordinator", "admin"]}>
+                    <CoordinatorDashboard />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              } 
+            />
             <Route path="/animals" element={<ProtectedRoute><Animals /></ProtectedRoute>} />
             <Route path="/animals/add" element={<ProtectedRoute><AddAnimal /></ProtectedRoute>} />
             <Route path="/animals/:id" element={<ProtectedRoute><AnimalDetails /></ProtectedRoute>} />

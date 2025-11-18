@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Heart,
   Smartphone,
@@ -10,9 +10,35 @@ import {
   Globe,
   CheckCircle,
   ArrowRight,
+  User,
+  Stethoscope,
+  Target,
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useUserRole } from "@/hooks/useUserRole";
+import { useEffect } from "react";
+import LanguageSelector from "@/components/LanguageSelector";
 
 const Landing = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { isAdmin, isVeterinaryOfficer, isProgramCoordinator, isFarmer, loading } = useUserRole();
+
+  // Auto-redirect authenticated users to their appropriate portal
+  useEffect(() => {
+    if (user && !loading) {
+      if (isAdmin) {
+        navigate("/admin");
+      } else if (isVeterinaryOfficer) {
+        navigate("/veterinary-dashboard");
+      } else if (isProgramCoordinator) {
+        navigate("/coordinator-dashboard");
+      } else if (isFarmer) {
+        navigate("/dashboard");
+      }
+    }
+  }, [user, loading, isAdmin, isVeterinaryOfficer, isProgramCoordinator, isFarmer, navigate]);
+
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -56,17 +82,54 @@ const Landing = () => {
               AI-powered diagnosis, and marketplace - all in 11 Indian languages.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/auth">
-                <Button size="lg" className="gap-2">
-                  Start Free Trial
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link to="#features">
-                <Button size="lg" variant="outline">
-                  Learn More
-                </Button>
-              </Link>
+              {user ? (
+                <Card className="w-full max-w-2xl">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Select Your Portal</CardTitle>
+                    <CardDescription>Choose the portal based on your role</CardDescription>
+                  </CardHeader>
+                  <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {isFarmer && (
+                      <Button onClick={() => navigate("/dashboard")} className="h-auto py-4 flex-col gap-2">
+                        <User className="h-6 w-6" />
+                        <span>Farmer Portal</span>
+                      </Button>
+                    )}
+                    {isVeterinaryOfficer && (
+                      <Button onClick={() => navigate("/veterinary-dashboard")} className="h-auto py-4 flex-col gap-2">
+                        <Stethoscope className="h-6 w-6" />
+                        <span>Veterinary Portal</span>
+                      </Button>
+                    )}
+                    {isProgramCoordinator && (
+                      <Button onClick={() => navigate("/coordinator-dashboard")} className="h-auto py-4 flex-col gap-2">
+                        <Target className="h-6 w-6" />
+                        <span>Coordinator Portal</span>
+                      </Button>
+                    )}
+                    {isAdmin && (
+                      <Button onClick={() => navigate("/admin")} className="h-auto py-4 flex-col gap-2">
+                        <Shield className="h-6 w-6" />
+                        <span>Admin Portal</span>
+                      </Button>
+                    )}
+                  </CardContent>
+                </Card>
+              ) : (
+                <>
+                  <Link to="/auth">
+                    <Button size="lg" className="gap-2">
+                      Start Free Trial
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                  <Link to="#features">
+                    <Button size="lg" variant="outline">
+                      Learn More
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
             <div className="flex items-center gap-8 pt-4">
               <div>

@@ -21,6 +21,8 @@ import {
   LogOut,
   Menu,
   Shield,
+  Stethoscope,
+  Target,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -31,11 +33,13 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const { signOut } = useAuth();
-  const { isAdmin, loading } = useUserRole();
+  const { isAdmin, isVeterinaryOfficer, isProgramCoordinator, loading } = useUserRole();
   const location = useLocation();
 
   const navigation = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
+    ...(isVeterinaryOfficer ? [{ name: "Veterinary Portal", href: "/veterinary-dashboard", icon: Stethoscope }] : []),
+    ...(isProgramCoordinator ? [{ name: "Coordinator Portal", href: "/coordinator-dashboard", icon: Target }] : []),
     { name: "My Animals", href: "/animals", icon: PawPrint },
     { name: "Health Records", href: "/health", icon: Heart },
     { name: "Vaccinations", href: "/vaccinations", icon: Syringe },
