@@ -58,8 +58,14 @@ const Landing = () => {
             <Link to="#contact" className="text-sm font-medium hover:text-primary">
               Contact
             </Link>
+            <Link to="/admin-login">
+              <Button variant="outline" size="sm" className="gap-2">
+                <Shield className="h-4 w-4" />
+                Admin Login
+              </Button>
+            </Link>
             <Link to="/auth">
-              <Button>Get Started</Button>
+              <Button>Farmer Login</Button>
             </Link>
           </nav>
         </div>
@@ -119,13 +125,14 @@ const Landing = () => {
                 <>
                   <Link to="/auth">
                     <Button size="lg" className="gap-2">
-                      Start Free Trial
+                      Farmer Sign Up / Login
                       <ArrowRight className="h-4 w-4" />
                     </Button>
                   </Link>
-                  <Link to="#features">
-                    <Button size="lg" variant="outline">
-                      Learn More
+                  <Link to="/admin-login">
+                    <Button size="lg" variant="outline" className="gap-2">
+                      <Shield className="h-4 w-4" />
+                      Admin Login
                     </Button>
                   </Link>
                 </>
