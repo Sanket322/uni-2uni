@@ -30,6 +30,7 @@ import Analytics from "./pages/Analytics";
 import AdminDashboard from "./pages/AdminDashboard";
 import VeterinaryDashboard from "./pages/VeterinaryDashboard";
 import CoordinatorDashboard from "./pages/CoordinatorDashboard";
+import Plans from "./pages/Plans";
 import RoleBasedRoute from "./components/RoleBasedRoute";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -87,6 +88,7 @@ const App = () => (
             <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
             <Route path="/emergency" element={<ProtectedRoute><Emergency /></ProtectedRoute>} />
             <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+            <Route path="/plans" element={<ProtectedRoute><Plans /></ProtectedRoute>} />
             <Route
               path="/admin"
               element={
