@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
+import FarmerLayout from "@/components/FarmerLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -62,8 +63,9 @@ const Helpdesk = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <div className="flex justify-between items-center">
+    <FarmerLayout>
+      <div className="space-y-6">
+        <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold">Helpdesk</h1>
           <p className="text-muted-foreground">Submit and track your support tickets</p>
@@ -127,7 +129,8 @@ const Helpdesk = () => {
           ))}
         </div>
       )}
-    </div>
+      </div>
+    </FarmerLayout>
   );
 };
 
