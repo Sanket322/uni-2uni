@@ -22,6 +22,7 @@ import landingHeroImage from "@/assets/landing-hero.jpg";
 import aiDoctorImage from "@/assets/ai-doctor-feature.jpg";
 import multilingualImage from "@/assets/multilingual-feature.jpg";
 import marketplaceImage from "@/assets/marketplace-feature.jpg";
+import farmerHeroImage from "@/assets/farmer-hero.jpg";
 import Footer from "@/components/Footer";
 import { Star } from "lucide-react";
 
@@ -50,33 +51,42 @@ const Landing = () => {
       {/* Header */}
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
         <div className="container flex h-16 items-center justify-between px-4">
-          <div className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <Heart className="h-6 w-6 text-primary" />
             <span className="text-xl font-bold">Animal Information System</span>
-          </div>
+          </Link>
           <nav className="hidden md:flex items-center gap-6">
-            <Link to="#features" className="text-sm font-medium hover:text-primary">
+            <Link to="/#features" className="text-sm font-medium hover:text-primary transition-colors">
               Features
             </Link>
-            <Link to="/about" className="text-sm font-medium hover:text-primary">
+            <Link to="/features" className="text-sm font-medium hover:text-primary transition-colors">
+              All Features
+            </Link>
+            <Link to="/about" className="text-sm font-medium hover:text-primary transition-colors">
               About
             </Link>
-            <Link to="/contact" className="text-sm font-medium hover:text-primary">
+            <Link to="/blog" className="text-sm font-medium hover:text-primary transition-colors">
+              Blog
+            </Link>
+            <Link to="/faq" className="text-sm font-medium hover:text-primary transition-colors">
+              FAQ
+            </Link>
+            <Link to="/contact" className="text-sm font-medium hover:text-primary transition-colors">
               Contact
             </Link>
             <Link to="/demo-login">
-              <Button variant="secondary" size="sm" className="gap-2">
+              <Button variant="secondary" size="sm">
                 Demo Login
               </Button>
             </Link>
             <Link to="/admin-login">
               <Button variant="outline" size="sm" className="gap-2">
                 <Shield className="h-4 w-4" />
-                Admin Login
+                Admin
               </Button>
             </Link>
             <Link to="/auth">
-              <Button>Farmer Login</Button>
+              <Button size="sm">Get Started</Button>
             </Link>
           </nav>
         </div>
@@ -92,11 +102,11 @@ const Landing = () => {
               </div>
             </div>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-              Mobile App for Healthy Animals, Happy Farmers
+              Digital Empowerment for Healthy Animals, Prosperous Farmers
             </h1>
             <p className="text-xl text-muted-foreground">
-              Comprehensive digital platform for livestock management, health monitoring,
-              AI-powered diagnosis, and marketplace - all in 11 Indian languages.
+              Comprehensive livestock management platform with AI-powered diagnosis, multilingual support,
+              and integrated marketplace - serving farmers across India in 11 languages.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               {user ? (
@@ -167,8 +177,8 @@ const Landing = () => {
           <div className="relative order-1 lg:order-2 space-y-4">
             <LanguageSelector />
             <img 
-              src={landingHeroImage} 
-              alt="Happy Indian farmers with livestock using digital technology"
+              src={farmerHeroImage} 
+              alt="Indian farmer using digital technology for livestock management with cattle in background"
               className="rounded-2xl shadow-2xl w-full h-auto"
             />
           </div>
