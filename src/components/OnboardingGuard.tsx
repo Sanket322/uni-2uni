@@ -21,6 +21,7 @@ const OnboardingGuard = ({ children }: OnboardingGuardProps) => {
 
   const checkOnboardingStatus = async () => {
     if (!user || rolesLoading) {
+      setChecking(false);
       return;
     }
 
