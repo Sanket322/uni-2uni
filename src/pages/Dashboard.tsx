@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
+import WeatherWidget from "@/components/WeatherWidget";
+import DiseaseSurveillanceWidget from "@/components/DiseaseSurveillanceWidget";
 import {
   PawPrint,
   Heart,
@@ -182,6 +184,12 @@ const Dashboard = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Weather & Disease Surveillance */}
+        <div className="grid gap-6 md:grid-cols-2">
+          <WeatherWidget />
+          <DiseaseSurveillanceWidget />
+        </div>
 
         {/* Recent Animals & Upcoming Events */}
         <div className="grid gap-6 md:grid-cols-2">

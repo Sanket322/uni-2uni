@@ -21,17 +21,9 @@ const WeatherWidget = ({ latitude, longitude }: { latitude?: number; longitude?:
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        // This will integrate with RF Weather API
-        // For now showing mock data structure
-        const mockWeather: WeatherData = {
-          temperature: 28,
-          condition: "Partly Cloudy",
-          humidity: 65,
-          windSpeed: 12,
-          forecast: "Expect light rain in the evening. Ensure animals have proper shelter.",
-          alerts: ["Heavy Rain Warning - Next 48 hours"],
-          advisory: "Move cattle to covered area. Ensure adequate ventilation and dry bedding."
-        };
+        // Import demo data generator dynamically
+        const { generateWeatherData } = await import("@/utils/demoDataGenerators");
+        const mockWeather = generateWeatherData({ latitude, longitude });
         
         setWeather(mockWeather);
         setLoading(false);
@@ -41,12 +33,7 @@ const WeatherWidget = ({ latitude, longitude }: { latitude?: number; longitude?:
       }
     };
 
-    if (latitude && longitude) {
-      fetchWeather();
-    } else {
-      // Use default location or user's profile location
-      fetchWeather();
-    }
+    fetchWeather();
   }, [latitude, longitude]);
 
   if (loading) {

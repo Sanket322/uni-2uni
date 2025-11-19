@@ -24,30 +24,9 @@ const DiseaseSurveillanceWidget = ({ state, district }: { state?: string; distri
   useEffect(() => {
     const fetchDiseaseAlerts = async () => {
       try {
-        // This will integrate with NADRES v2 API
-        // For now showing mock data structure
-        const mockAlerts: DiseaseAlert[] = [
-          {
-            id: "1",
-            disease: "Foot and Mouth Disease",
-            species: "Cattle",
-            severity: "high",
-            location: "Maharashtra - Pune District",
-            reportedCases: 45,
-            date: new Date().toISOString(),
-            prediction: "High risk in your area. Vaccination recommended."
-          },
-          {
-            id: "2",
-            disease: "Lumpy Skin Disease",
-            species: "Cattle, Buffalo",
-            severity: "medium",
-            location: "Maharashtra - Multiple Districts",
-            reportedCases: 23,
-            date: new Date().toISOString(),
-            prediction: "Moderate risk. Monitor animals closely."
-          }
-        ];
+        // Import demo data generator dynamically
+        const { generateDiseaseAlerts } = await import("@/utils/demoDataGenerators");
+        const mockAlerts = generateDiseaseAlerts(3);
         
         setAlerts(mockAlerts);
         setLoading(false);
