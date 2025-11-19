@@ -572,6 +572,7 @@ export type Database = {
       marketplace_listings: {
         Row: {
           animal_id: string | null
+          average_rating: number | null
           contact_number: string | null
           created_at: string | null
           description: string | null
@@ -579,6 +580,7 @@ export type Database = {
           location: string
           photos: Json | null
           price: number | null
+          review_count: number | null
           seller_id: string
           status: Database["public"]["Enums"]["listing_status"] | null
           title: string
@@ -587,6 +589,7 @@ export type Database = {
         }
         Insert: {
           animal_id?: string | null
+          average_rating?: number | null
           contact_number?: string | null
           created_at?: string | null
           description?: string | null
@@ -594,6 +597,7 @@ export type Database = {
           location: string
           photos?: Json | null
           price?: number | null
+          review_count?: number | null
           seller_id: string
           status?: Database["public"]["Enums"]["listing_status"] | null
           title: string
@@ -602,6 +606,7 @@ export type Database = {
         }
         Update: {
           animal_id?: string | null
+          average_rating?: number | null
           contact_number?: string | null
           created_at?: string | null
           description?: string | null
@@ -609,6 +614,7 @@ export type Database = {
           location?: string
           photos?: Json | null
           price?: number | null
+          review_count?: number | null
           seller_id?: string
           status?: Database["public"]["Enums"]["listing_status"] | null
           title?: string
@@ -621,6 +627,44 @@ export type Database = {
             columns: ["animal_id"]
             isOneToOne: false
             referencedRelation: "animals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      marketplace_reviews: {
+        Row: {
+          created_at: string | null
+          id: string
+          listing_id: string
+          rating: number
+          review_text: string | null
+          reviewer_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          listing_id: string
+          rating: number
+          review_text?: string | null
+          reviewer_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          listing_id?: string
+          rating?: number
+          review_text?: string | null
+          reviewer_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketplace_reviews_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "marketplace_listings"
             referencedColumns: ["id"]
           },
         ]
