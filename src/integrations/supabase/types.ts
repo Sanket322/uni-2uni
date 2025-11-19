@@ -287,6 +287,101 @@ export type Database = {
         }
         Relationships: []
       }
+      feed_cost_tracking: {
+        Row: {
+          animal_id: string | null
+          cost: number
+          created_at: string
+          date: string
+          feed_type: string
+          id: string
+          notes: string | null
+          quantity_consumed: number
+          user_id: string
+        }
+        Insert: {
+          animal_id?: string | null
+          cost: number
+          created_at?: string
+          date?: string
+          feed_type: string
+          id?: string
+          notes?: string | null
+          quantity_consumed: number
+          user_id: string
+        }
+        Update: {
+          animal_id?: string | null
+          cost?: number
+          created_at?: string
+          date?: string
+          feed_type?: string
+          id?: string
+          notes?: string | null
+          quantity_consumed?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feed_cost_tracking_animal_id_fkey"
+            columns: ["animal_id"]
+            isOneToOne: false
+            referencedRelation: "animals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      feed_inventory: {
+        Row: {
+          cost_per_unit: number | null
+          created_at: string
+          expiry_date: string | null
+          feed_name: string
+          feed_type: string
+          id: string
+          notes: string | null
+          purchase_date: string | null
+          quantity: number
+          storage_location: string | null
+          supplier_name: string | null
+          unit: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cost_per_unit?: number | null
+          created_at?: string
+          expiry_date?: string | null
+          feed_name: string
+          feed_type: string
+          id?: string
+          notes?: string | null
+          purchase_date?: string | null
+          quantity?: number
+          storage_location?: string | null
+          supplier_name?: string | null
+          unit: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cost_per_unit?: number | null
+          created_at?: string
+          expiry_date?: string | null
+          feed_name?: string
+          feed_type?: string
+          id?: string
+          notes?: string | null
+          purchase_date?: string | null
+          quantity?: number
+          storage_location?: string | null
+          supplier_name?: string | null
+          unit?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       feedback: {
         Row: {
           category: string | null
@@ -313,6 +408,60 @@ export type Database = {
           user_id?: string | null
         }
         Relationships: []
+      }
+      feeding_logs: {
+        Row: {
+          animal_id: string
+          animal_response: string | null
+          created_at: string
+          fed_by: string | null
+          feed_type: string
+          feeding_time: string
+          id: string
+          notes: string | null
+          quantity_fed: string
+          schedule_id: string | null
+        }
+        Insert: {
+          animal_id: string
+          animal_response?: string | null
+          created_at?: string
+          fed_by?: string | null
+          feed_type: string
+          feeding_time?: string
+          id?: string
+          notes?: string | null
+          quantity_fed: string
+          schedule_id?: string | null
+        }
+        Update: {
+          animal_id?: string
+          animal_response?: string | null
+          created_at?: string
+          fed_by?: string | null
+          feed_type?: string
+          feeding_time?: string
+          id?: string
+          notes?: string | null
+          quantity_fed?: string
+          schedule_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feeding_logs_animal_id_fkey"
+            columns: ["animal_id"]
+            isOneToOne: false
+            referencedRelation: "animals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "feeding_logs_schedule_id_fkey"
+            columns: ["schedule_id"]
+            isOneToOne: false
+            referencedRelation: "feeding_schedules"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       feeding_schedules: {
         Row: {
