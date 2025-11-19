@@ -155,7 +155,7 @@ const BlogPost = () => {
 
           {/* Content */}
           <Card>
-            <CardContent className="pt-6 prose prose-slate max-w-none">
+            <CardContent className="pt-6 prose prose-lg max-w-none dark:prose-invert">
               <div dangerouslySetInnerHTML={{ __html: post.content_body || "" }} />
             </CardContent>
           </Card>

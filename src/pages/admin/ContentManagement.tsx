@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -23,11 +23,12 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { Plus, Search, Edit, Trash2, Eye, FileText } from "lucide-react";
+import { Plus, Search, Edit, Trash2, Eye, FileText, Upload } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { z } from "zod";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useAuth } from "@/contexts/AuthContext";
 
 const urlSchema = z.string().url().max(500).optional().or(z.literal(""));
 
@@ -77,11 +78,16 @@ const ContentManagement = () => {
   const [filteredContents, setFilteredContents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewContent, setPreviewContent] = useState<any>(null);
   const [editingContent, setEditingContent] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
   const [filterType, setFilterType] = useState("all");
+  const [uploading, setUploading] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth();
+  const quillRef = useRef<ReactQuill>(null);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -308,6 +314,102 @@ const ContentManagement = () => {
     }));
   };
 
+  const handleImageUpload = () => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      if (!file || !user) return;
+
+      // Validate file size (5MB limit)
+      if (file.size > 5 * 1024 * 1024) {
+        toast({
+          title: "Error",
+          description: "Image size must be less than 5MB",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Validate file type
+      if (!file.type.startsWith("image/")) {
+        toast({
+          title: "Error",
+          description: "Please upload an image file",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      setUploading(true);
+
+      try {
+        const fileExt = file.name.split(".").pop();
+        const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+
+        const { error: uploadError, data } = await supabase.storage
+          .from("cms-images")
+          .upload(fileName, file);
+
+        if (uploadError) throw uploadError;
+
+        const { data: { publicUrl } } = supabase.storage
+          .from("cms-images")
+          .getPublicUrl(fileName);
+
+        // Insert image into editor at cursor position
+        const quill = quillRef.current?.getEditor();
+        if (quill) {
+          const range = quill.getSelection();
+          quill.insertEmbed(range?.index || 0, "image", publicUrl);
+        }
+
+        toast({
+          title: "Success",
+          description: "Image uploaded successfully",
+        });
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        toast({
+          title: "Error",
+          description: "Failed to upload image",
+          variant: "destructive",
+        });
+      } finally {
+        setUploading(false);
+      }
+    };
+  };
+
+  const handlePreview = () => {
+    setPreviewContent({
+      ...formData,
+      tags: formData.tags.split(",").map((t) => t.trim()).filter(Boolean),
+    });
+    setPreviewOpen(true);
+  };
+
+  const modules = {
+    toolbar: {
+      container: [
+        [{ header: [1, 2, 3, false] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["blockquote", "code-block"],
+        [{ color: [] }, { background: [] }],
+        ["link", "image", "video"],
+        [{ align: [] }],
+        ["clean"],
+      ],
+      handlers: {
+        image: handleImageUpload,
+      },
+    },
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -361,28 +463,29 @@ const ContentManagement = () => {
 
                 <div className="col-span-2">
                   <Label htmlFor="content_body">Content Body (Rich Text Editor)</Label>
-                  <div className="border rounded-md min-h-[300px]">
-                    <ReactQuill
-                      theme="snow"
-                      value={formData.content_body}
-                      onChange={(value) =>
-                        setFormData({ ...formData, content_body: value })
-                      }
-                      modules={{
-                        toolbar: [
-                          [{ header: [1, 2, 3, false] }],
-                          ["bold", "italic", "underline", "strike"],
-                          [{ list: "ordered" }, { list: "bullet" }],
-                          ["blockquote", "code-block"],
-                          [{ color: [] }, { background: [] }],
-                          ["link", "image", "video"],
-                          [{ align: [] }],
-                          ["clean"],
-                        ],
-                      }}
-                      placeholder="Enter the main content with rich formatting..."
-                      className="h-64"
-                    />
+                  <div className="space-y-2">
+                    {uploading && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Upload className="h-4 w-4 animate-pulse" />
+                        Uploading image...
+                      </div>
+                    )}
+                    <div className="border rounded-md min-h-[300px]">
+                      <ReactQuill
+                        ref={quillRef}
+                        theme="snow"
+                        value={formData.content_body}
+                        onChange={(value) =>
+                          setFormData({ ...formData, content_body: value })
+                        }
+                        modules={modules}
+                        placeholder="Enter the main content with rich formatting..."
+                        className="h-64"
+                      />
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      Click the image icon in the toolbar to upload and insert images
+                    </p>
                   </div>
                 </div>
 
@@ -530,6 +633,10 @@ const ContentManagement = () => {
               <div className="flex gap-2 justify-end">
                 <Button type="button" variant="outline" onClick={resetForm}>
                   Cancel
+                </Button>
+                <Button type="button" variant="secondary" onClick={handlePreview}>
+                  <Eye className="h-4 w-4 mr-2" />
+                  Preview
                 </Button>
                 <Button type="submit">
                   {editingContent ? "Update" : "Create"} Content
@@ -699,6 +806,123 @@ const ContentManagement = () => {
             ))}
         </TabsContent>
       </Tabs>
+
+      {/* Preview Dialog */}
+      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Content Preview</DialogTitle>
+            <DialogDescription>
+              Preview how your blog post will appear to readers
+            </DialogDescription>
+          </DialogHeader>
+
+          {previewContent && (
+            <div className="space-y-6">
+              {/* Header */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Badge variant="secondary">{previewContent.category.replace("_", " ")}</Badge>
+                  <Badge variant="outline">{previewContent.content_type}</Badge>
+                  {previewContent.is_featured && (
+                    <Badge variant="default">Featured</Badge>
+                  )}
+                </div>
+
+                <h1 className="text-4xl font-bold">{previewContent.title}</h1>
+                
+                {previewContent.description && (
+                  <p className="text-xl text-muted-foreground">
+                    {previewContent.description}
+                  </p>
+                )}
+
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <span>Language: {previewContent.language.toUpperCase()}</span>
+                  {previewContent.state && <span>State: {previewContent.state}</span>}
+                  {previewContent.district && <span>District: {previewContent.district}</span>}
+                </div>
+
+                {previewContent.species && previewContent.species.length > 0 && (
+                  <div className="flex gap-2 flex-wrap">
+                    <span className="text-sm text-muted-foreground">For:</span>
+                    {previewContent.species.map((sp: string) => (
+                      <Badge key={sp} variant="outline" className="capitalize">
+                        {sp}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+
+                {previewContent.tags && previewContent.tags.length > 0 && (
+                  <div className="flex gap-2 flex-wrap">
+                    {previewContent.tags.map((tag: string) => (
+                      <Badge key={tag} variant="secondary">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Thumbnail */}
+              {previewContent.thumbnail_url && (
+                <div className="rounded-lg overflow-hidden">
+                  <img
+                    src={previewContent.thumbnail_url}
+                    alt={previewContent.title}
+                    className="w-full h-auto"
+                  />
+                </div>
+              )}
+
+              {/* Content Body */}
+              {previewContent.content_body && (
+                <div
+                  className="prose prose-lg max-w-none dark:prose-invert"
+                  dangerouslySetInnerHTML={{ __html: previewContent.content_body }}
+                />
+              )}
+
+              {/* Media */}
+              {previewContent.media_url && (
+                <div className="space-y-2">
+                  <h3 className="font-semibold">Media</h3>
+                  <a
+                    href={previewContent.media_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    View Media
+                  </a>
+                </div>
+              )}
+
+              {/* Download */}
+              {previewContent.download_url && (
+                <div className="space-y-2">
+                  <h3 className="font-semibold">Download</h3>
+                  <a
+                    href={previewContent.download_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    Download Resource
+                  </a>
+                </div>
+              )}
+            </div>
+          )}
+
+          <div className="flex justify-end gap-2 pt-4">
+            <Button variant="outline" onClick={() => setPreviewOpen(false)}>
+              Close
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
