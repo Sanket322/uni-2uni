@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link, useParams } from "react-router-dom";
-import { Heart, ArrowLeft, Calendar, Eye, Share2 } from "lucide-react";
+import { Heart, ArrowLeft, Calendar, Eye, Share2, Facebook, Twitter, Linkedin, MessageCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import { PublicHeader } from "@/components/PublicHeader";
 import { BreadcrumbNav } from "@/components/BreadcrumbNav";
 import { StickyCTABanner } from "@/components/StickyCTABanner";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 interface BlogPost {
   id: string;
@@ -63,19 +64,38 @@ const BlogPost = () => {
     }
   };
 
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: post?.title,
-        text: post?.description,
-        url: window.location.href,
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      toast({
-        title: "Link Copied",
-        description: "Blog post link copied to clipboard",
-      });
+  const handleShare = (platform?: string) => {
+    const url = encodeURIComponent(window.location.href);
+    const title = encodeURIComponent(post?.title || "");
+    const description = encodeURIComponent(post?.description || "");
+
+    switch (platform) {
+      case "facebook":
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
+        break;
+      case "twitter":
+        window.open(`https://twitter.com/intent/tweet?url=${url}&text=${title}`, "_blank");
+        break;
+      case "linkedin":
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, "_blank");
+        break;
+      case "whatsapp":
+        window.open(`https://wa.me/?text=${title}%20${url}`, "_blank");
+        break;
+      default:
+        if (navigator.share) {
+          navigator.share({
+            title: post?.title,
+            text: post?.description,
+            url: window.location.href,
+          });
+        } else {
+          navigator.clipboard.writeText(window.location.href);
+          toast({
+            title: "Link Copied",
+            description: "Blog post link copied to clipboard",
+          });
+        }
     }
   };
 
@@ -126,10 +146,36 @@ const BlogPost = () => {
               <Eye className="h-4 w-4" />
               <span>{post.view_count || 0} views</span>
             </div>
-            <Button variant="ghost" size="sm" onClick={handleShare} className="ml-auto">
-              <Share2 className="h-4 w-4 mr-2" />
-              Share
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="ml-auto">
+                  <Share2 className="h-4 w-4 mr-2" />
+                  Share
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => handleShare("facebook")}>
+                  <Facebook className="h-4 w-4 mr-2" />
+                  Facebook
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleShare("twitter")}>
+                  <Twitter className="h-4 w-4 mr-2" />
+                  Twitter
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleShare("linkedin")}>
+                  <Linkedin className="h-4 w-4 mr-2" />
+                  LinkedIn
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleShare("whatsapp")}>
+                  <MessageCircle className="h-4 w-4 mr-2" />
+                  WhatsApp
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleShare()}>
+                  <Share2 className="h-4 w-4 mr-2" />
+                  Copy Link
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Title */}

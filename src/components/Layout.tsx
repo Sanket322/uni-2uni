@@ -24,6 +24,7 @@ import {
   Shield,
   Stethoscope,
   Target,
+  Image,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -47,6 +48,7 @@ const Layout = ({ children }: LayoutProps) => {
     { name: "Breeding", href: "/breeding", icon: Baby },
     { name: "Feeding", href: "/feeding", icon: UtensilsCrossed },
     { name: "Marketplace", href: "/marketplace", icon: ShoppingCart },
+    { name: "Community", href: "/social", icon: Image },
     { name: "AI Pashu Doctor", href: "/ai-doctor", icon: Bot },
     { name: "Gov. Schemes", href: "/schemes", icon: FileText },
     { name: "Emergency", href: "/emergency", icon: Phone },
