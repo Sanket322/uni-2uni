@@ -4,10 +4,10 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Heart, MessageCircle, Share2, Plus, Upload, X } from "lucide-react";
+import { Heart, MessageCircle, Share2, Plus, Upload, X, Flag, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import Layout from "@/components/Layout";
 
@@ -44,6 +44,9 @@ const SocialFeed = () => {
   const [uploading, setUploading] = useState(false);
   const [commentText, setCommentText] = useState<{ [key: string]: string }>({});
   const [showComments, setShowComments] = useState<{ [key: string]: boolean }>({});
+  const [reportDialogOpen, setReportDialogOpen] = useState(false);
+  const [reportPostId, setReportPostId] = useState<string | null>(null);
+  const [reportReason, setReportReason] = useState("");
 
   useEffect(() => {
     fetchPosts();
@@ -242,6 +245,43 @@ const SocialFeed = () => {
     }
   };
 
+  const handleReportPost = async () => {
+    if (!reportPostId || !reportReason.trim()) {
+      toast({
+        title: "Error",
+        description: "Please provide a reason for reporting",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      const { error } = await supabase.from("post_reports").insert({
+        post_id: reportPostId,
+        reporter_id: user?.id,
+        reason: reportReason,
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Report Submitted",
+        description: "Thank you for helping keep our community safe",
+      });
+
+      setReportDialogOpen(false);
+      setReportPostId(null);
+      setReportReason("");
+    } catch (error) {
+      console.error("Error reporting post:", error);
+      toast({
+        title: "Error",
+        description: "Failed to submit report",
+        variant: "destructive",
+      });
+    }
+  };
+
   if (loading) {
     return (
       <Layout>
@@ -351,8 +391,31 @@ const SocialFeed = () => {
                         Delete
                       </Button>
                     )}
-                  </div>
-                </CardHeader>
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setReportPostId(post.id);
+                      setReportDialogOpen(true);
+                    }}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <Flag className="h-4 w-4" />
+                  </Button>
+                  {post.user_id === user?.id && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDeletePost(post.id, post.image_url)}
+                      className="text-destructive hover:text-destructive"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  )}
+                </div>
+              </CardHeader>
                 <CardContent className="p-0">
                   <img
                     src={post.image_url}
@@ -425,6 +488,35 @@ const SocialFeed = () => {
             </div>
           )}
         </div>
+
+        <Dialog open={reportDialogOpen} onOpenChange={setReportDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Report Post</DialogTitle>
+              <DialogDescription>
+                Help us understand why this post should be reviewed
+              </DialogDescription>
+            </DialogHeader>
+            <Textarea
+              placeholder="Please describe why you're reporting this post..."
+              value={reportReason}
+              onChange={(e) => setReportReason(e.target.value)}
+              rows={4}
+            />
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setReportDialogOpen(false);
+                  setReportReason("");
+                }}
+              >
+                Cancel
+              </Button>
+              <Button onClick={handleReportPost}>Submit Report</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </Layout>
   );

@@ -43,6 +43,7 @@ import UserActivityPage from "./pages/admin/UserActivityPage";
 import SubscriptionsPage from "./pages/admin/SubscriptionsPage";
 import SchemesPage from "./pages/admin/SchemesPage";
 import ContentPage from "./pages/admin/ContentPage";
+import CommunityPage from "./pages/admin/CommunityPage";
 import MarketplacePage from "./pages/admin/MarketplacePage";
 import NotificationsPage from "./pages/admin/NotificationsPage";
 import VeterinaryDashboard from "./pages/VeterinaryDashboard";
@@ -237,6 +238,16 @@ const App = () => (
                 <ProtectedRoute>
                   <RoleBasedRoute allowedRoles={["admin"]}>
                     <NotificationsPage />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/community"
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["admin"]}>
+                    <CommunityPage />
                   </RoleBasedRoute>
                 </ProtectedRoute>
               }

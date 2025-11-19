@@ -23,6 +23,7 @@ import {
   Shield,
   Activity,
   MessageSquare,
+  Image,
 } from "lucide-react";
 
 const adminMenuItems = [
@@ -72,6 +73,12 @@ const adminMenuItems = [
     title: "Marketplace Moderation",
     url: "/admin/marketplace",
     icon: ShoppingCart,
+    group: "Operations",
+  },
+  {
+    title: "Community Moderation",
+    url: "/admin/community",
+    icon: Image,
     group: "Operations",
   },
   {

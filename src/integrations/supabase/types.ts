@@ -921,12 +921,54 @@ export type Database = {
           },
         ]
       }
+      post_reports: {
+        Row: {
+          admin_notes: string | null
+          created_at: string
+          id: string
+          post_id: string
+          reason: string
+          reporter_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string
+          id?: string
+          post_id: string
+          reason: string
+          reporter_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string
+          id?: string
+          post_id?: string
+          reason?: string
+          reporter_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_reports_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       posts: {
         Row: {
           caption: string | null
           created_at: string
           id: string
           image_url: string
+          report_count: number | null
           updated_at: string
           user_id: string
         }
@@ -935,6 +977,7 @@ export type Database = {
           created_at?: string
           id?: string
           image_url: string
+          report_count?: number | null
           updated_at?: string
           user_id: string
         }
@@ -943,6 +986,7 @@ export type Database = {
           created_at?: string
           id?: string
           image_url?: string
+          report_count?: number | null
           updated_at?: string
           user_id?: string
         }
