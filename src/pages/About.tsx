@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { Heart, Target, Eye, Award, ArrowLeft } from "lucide-react";
 import aboutHeroImage from "@/assets/about-hero.jpg";
+import Footer from "@/components/Footer";
 
 const About = () => {
   return (
@@ -225,12 +226,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t py-12 bg-muted/50">
-        <div className="container px-4 text-center text-sm text-muted-foreground">
-          <p>© 2024 Reliance Foundation. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
