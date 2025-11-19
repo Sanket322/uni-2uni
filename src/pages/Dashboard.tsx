@@ -14,6 +14,7 @@ import {
   Plus,
   Calendar,
   Bell,
+  MessageSquare,
 } from "lucide-react";
 
 const Dashboard = () => {
@@ -153,7 +154,7 @@ const Dashboard = () => {
             <CardTitle>Quick Actions</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-3 md:grid-cols-3">
+            <div className="grid gap-3 md:grid-cols-4">
               <Link to="/ai-doctor">
                 <Button variant="outline" className="w-full justify-start">
                   <AlertTriangle className="mr-2 h-4 w-4" />
@@ -170,6 +171,12 @@ const Dashboard = () => {
                 <Button variant="outline" className="w-full justify-start">
                   <TrendingUp className="mr-2 h-4 w-4" />
                   Create Listing
+                </Button>
+              </Link>
+              <Link to="/helpdesk">
+                <Button variant="outline" className="w-full justify-start">
+                  <MessageSquare className="mr-2 h-4 w-4" />
+                  Helpdesk Support
                 </Button>
               </Link>
             </div>
