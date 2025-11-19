@@ -9,6 +9,23 @@ import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import type { Tables } from "@/integrations/supabase/types";
+import { z } from "zod";
+
+const profileSchema = z.object({
+  full_name: z.string()
+    .trim()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name must be less than 100 characters")
+    .regex(/^[a-zA-Z\s]+$/, "Name can only contain letters and spaces"),
+  phone_number: z.string()
+    .regex(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+  state: z.string().trim().min(1, "State is required").max(50),
+  district: z.string().trim().min(1, "District is required").max(50),
+  village: z.string().trim().max(100).optional(),
+  pin_code: z.string()
+    .regex(/^[0-9]{6}$/, "PIN code must be exactly 6 digits"),
+  preferred_language: z.string()
+});
 
 type Profile = Tables<"profiles">;
 
@@ -69,30 +86,39 @@ const Profile = () => {
     e.preventDefault();
     if (!user) return;
 
-    setLoading(true);
+    try {
+      const validatedData = profileSchema.parse(formData);
+      setLoading(true);
 
-    const { error } = await supabase
-      .from("profiles")
-      .update(formData)
-      .eq("id", user.id);
+      const { error } = await supabase
+        .from("profiles")
+        .update(validatedData)
+        .eq("id", user.id);
 
-    setLoading(false);
-
-    if (error) {
-      toast({
-        title: "Error",
-        description: "Failed to update profile",
-        variant: "destructive",
-      });
-      return;
+      if (error) {
+        toast({
+          title: "Error",
+          description: "Failed to update profile",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Success",
+          description: "Profile updated successfully",
+        });
+        fetchProfile();
+      }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast({
+          title: "Validation Error",
+          description: error.errors[0].message,
+          variant: "destructive",
+        });
+      }
+    } finally {
+      setLoading(false);
     }
-
-    toast({
-      title: "Success",
-      description: "Profile updated successfully",
-    });
-    
-    fetchProfile();
   };
 
   return (
