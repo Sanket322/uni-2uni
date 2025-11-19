@@ -9,7 +9,8 @@ import { ImpersonationBanner } from "@/components/ImpersonationBanner";
 import { 
   Menu, Home, Beef, Heart, Syringe, Calendar, 
   ShoppingCart, MessageSquare, Award, Bell, 
-  User, LogOut, CreditCard, BookOpen
+  User, LogOut, CreditCard, BookOpen, Image,
+  Utensils, HelpCircle, Settings as SettingsIcon
 } from "lucide-react";
 
 interface FarmerLayoutProps {
@@ -28,12 +29,16 @@ const FarmerLayout = ({ children }: FarmerLayoutProps) => {
     { name: "Health", href: "/health", icon: Heart },
     { name: "Vaccinations", href: "/vaccinations", icon: Syringe },
     { name: "Breeding", href: "/breeding", icon: Calendar },
+    { name: "Feeding", href: "/feeding", icon: Utensils },
     { name: "Marketplace", href: "/marketplace", icon: ShoppingCart },
+    { name: "Community", href: "/social", icon: Image },
     { name: "AI Doctor", href: "/ai-doctor", icon: MessageSquare },
-    { name: "Notifications", href: "/notifications", icon: Bell },
-    { name: "Resources", href: "/resources", icon: BookOpen },
+    { name: "Content Library", href: "/content-library", icon: BookOpen },
     { name: "Schemes", href: "/schemes", icon: Award },
+    { name: "Helpdesk", href: "/helpdesk", icon: HelpCircle },
+    { name: "Notifications", href: "/notifications", icon: Bell },
     { name: "Plans", href: "/plans", icon: CreditCard },
+    { name: "Settings", href: "/settings", icon: SettingsIcon },
   ];
 
   const handleSignOut = async () => {
