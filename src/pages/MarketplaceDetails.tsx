@@ -5,7 +5,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, MapPin, Phone, Eye, User } from "lucide-react";
+import { ArrowLeft, MapPin, Phone, Eye, User, MessageSquare } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { StarRating } from "@/components/StarRating";
@@ -24,6 +35,14 @@ const MarketplaceDetails = () => {
   const [listing, setListing] = useState<MarketplaceListing | null>(null);
   const [reviews, setReviews] = useState<MarketplaceReview[]>([]);
   const [loading, setLoading] = useState(true);
+  const [enquiryOpen, setEnquiryOpen] = useState(false);
+  const [enquiryForm, setEnquiryForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    message: "",
+  });
+  const [submittingEnquiry, setSubmittingEnquiry] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -89,6 +108,48 @@ const MarketplaceDetails = () => {
         .update({ views_count: (listing.views_count || 0) + 1 })
         .eq("id", id);
     }
+  };
+
+  const handleEnquirySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmittingEnquiry(true);
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "You must be logged in to send an enquiry",
+        variant: "destructive",
+      });
+      setSubmittingEnquiry(false);
+      return;
+    }
+
+    const { error } = await supabase.from("marketplace_enquiries").insert({
+      listing_id: id!,
+      buyer_id: user.id,
+      buyer_name: enquiryForm.name,
+      buyer_phone: enquiryForm.phone,
+      buyer_email: enquiryForm.email || null,
+      message: enquiryForm.message,
+    });
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send enquiry. Please try again.",
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Success",
+        description: "Your enquiry has been sent successfully!",
+      });
+      setEnquiryOpen(false);
+      setEnquiryForm({ name: "", phone: "", email: "", message: "" });
+    }
+
+    setSubmittingEnquiry(false);
   };
 
   if (loading) {
@@ -165,10 +226,79 @@ const MarketplaceDetails = () => {
             </div>
 
             {listing.contact_number && (
-              <Button className="w-full" size="lg">
-                <Phone className="h-4 w-4 mr-2" />
-                Contact Seller
-              </Button>
+              <div className="flex gap-3">
+                <Button className="flex-1" size="lg">
+                  <Phone className="h-4 w-4 mr-2" />
+                  Contact Seller
+                </Button>
+                <Dialog open={enquiryOpen} onOpenChange={setEnquiryOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" className="flex-1" size="lg">
+                      <MessageSquare className="h-4 w-4 mr-2" />
+                      Send Enquiry
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Send Enquiry</DialogTitle>
+                      <DialogDescription>
+                        Fill in the details below to send an enquiry to the seller
+                      </DialogDescription>
+                    </DialogHeader>
+                    <form onSubmit={handleEnquirySubmit} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="name">Your Name *</Label>
+                        <Input
+                          id="name"
+                          value={enquiryForm.name}
+                          onChange={(e) =>
+                            setEnquiryForm({ ...enquiryForm, name: e.target.value })
+                          }
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="phone">Phone Number *</Label>
+                        <Input
+                          id="phone"
+                          type="tel"
+                          value={enquiryForm.phone}
+                          onChange={(e) =>
+                            setEnquiryForm({ ...enquiryForm, phone: e.target.value })
+                          }
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="email">Email (Optional)</Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          value={enquiryForm.email}
+                          onChange={(e) =>
+                            setEnquiryForm({ ...enquiryForm, email: e.target.value })
+                          }
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="message">Message *</Label>
+                        <Textarea
+                          id="message"
+                          rows={4}
+                          value={enquiryForm.message}
+                          onChange={(e) =>
+                            setEnquiryForm({ ...enquiryForm, message: e.target.value })
+                          }
+                          required
+                        />
+                      </div>
+                      <Button type="submit" className="w-full" disabled={submittingEnquiry}>
+                        {submittingEnquiry ? "Sending..." : "Send Enquiry"}
+                      </Button>
+                    </form>
+                  </DialogContent>
+                </Dialog>
+              </div>
             )}
           </CardContent>
         </Card>

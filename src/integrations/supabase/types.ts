@@ -768,6 +768,53 @@ export type Database = {
         }
         Relationships: []
       }
+      marketplace_enquiries: {
+        Row: {
+          buyer_email: string | null
+          buyer_id: string
+          buyer_name: string
+          buyer_phone: string
+          created_at: string
+          id: string
+          listing_id: string
+          message: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          buyer_email?: string | null
+          buyer_id: string
+          buyer_name: string
+          buyer_phone: string
+          created_at?: string
+          id?: string
+          listing_id: string
+          message: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          buyer_email?: string | null
+          buyer_id?: string
+          buyer_name?: string
+          buyer_phone?: string
+          created_at?: string
+          id?: string
+          listing_id?: string
+          message?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketplace_enquiries_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "marketplace_listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       marketplace_listings: {
         Row: {
           animal_id: string | null

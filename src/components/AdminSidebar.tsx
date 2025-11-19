@@ -77,6 +77,12 @@ const adminMenuItems = [
     group: "Operations",
   },
   {
+    title: "Marketplace Enquiries",
+    url: "/admin/marketplace-enquiries",
+    icon: MessageSquare,
+    group: "Operations",
+  },
+  {
     title: "Community Moderation",
     url: "/admin/community",
     icon: Image,
@@ -91,13 +97,13 @@ const adminMenuItems = [
   {
     title: "Helpdesk",
     url: "/admin/helpdesk",
-    icon: MessageSquare,
+    icon: Mail,
     group: "Support",
   },
   {
     title: "Messages",
     url: "/messages",
-    icon: Mail,
+    icon: MessageSquare,
     group: "Support",
   },
 ];
