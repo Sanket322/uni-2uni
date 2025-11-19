@@ -277,3 +277,32 @@ export const generateEmergencyContacts = () => {
     },
   ];
 };
+
+/**
+ * Seed demo notifications into database (for testing)
+ * Call this from your app to populate the notifications table
+ */
+export const seedDemoNotifications = async (userId: string, supabaseClient: any) => {
+  const demoNotifications = generateNotifications(15);
+  
+  const notificationsToInsert = demoNotifications.map(notification => ({
+    user_id: userId,
+    title: notification.title,
+    message: notification.message,
+    type: notification.type,
+    priority: notification.priority,
+    is_read: notification.isRead,
+    created_at: notification.timestamp,
+  }));
+
+  const { data, error } = await supabaseClient
+    .from('notifications')
+    .insert(notificationsToInsert);
+
+  if (error) {
+    console.error('Error seeding notifications:', error);
+    return { success: false, error };
+  }
+
+  return { success: true, data };
+};
