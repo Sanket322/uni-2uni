@@ -108,9 +108,20 @@ const BlogPost = () => {
               <span className="text-xl font-bold">Animal Information System</span>
             </div>
           </div>
-          <Link to="/auth">
-            <Button>Get Started</Button>
-          </Link>
+          <nav className="hidden md:flex items-center gap-6">
+            <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">
+              Home
+            </Link>
+            <Link to="/features" className="text-sm font-medium hover:text-primary transition-colors">
+              Features
+            </Link>
+            <Link to="/blog" className="text-sm font-medium hover:text-primary transition-colors">
+              Blog
+            </Link>
+            <Link to="/auth">
+              <Button>Get Started</Button>
+            </Link>
+          </nav>
         </div>
       </header>
 
