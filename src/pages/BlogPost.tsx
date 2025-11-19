@@ -8,6 +8,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import Footer from "@/components/Footer";
 import { format } from "date-fns";
+import { PublicHeader } from "@/components/PublicHeader";
+import { BreadcrumbNav } from "@/components/BreadcrumbNav";
+import { StickyCTABanner } from "@/components/StickyCTABanner";
 
 interface BlogPost {
   id: string;
@@ -94,36 +97,9 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-        <div className="container flex h-16 items-center justify-between px-4">
-          <div className="flex items-center gap-4">
-            <Link to="/blog">
-              <Button variant="ghost" size="icon">
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-            </Link>
-            <div className="flex items-center gap-2">
-              <Heart className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold">Animal Information System</span>
-            </div>
-          </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">
-              Home
-            </Link>
-            <Link to="/features" className="text-sm font-medium hover:text-primary transition-colors">
-              Features
-            </Link>
-            <Link to="/blog" className="text-sm font-medium hover:text-primary transition-colors">
-              Blog
-            </Link>
-            <Link to="/auth">
-              <Button>Get Started</Button>
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <PublicHeader />
+      <BreadcrumbNav />
+      <StickyCTABanner />
 
       {/* Main Content */}
       <main className="flex-1">

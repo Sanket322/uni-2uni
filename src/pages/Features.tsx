@@ -24,6 +24,9 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import Footer from "@/components/Footer";
+import { PublicHeader } from "@/components/PublicHeader";
+import { BreadcrumbNav } from "@/components/BreadcrumbNav";
+import { StickyCTABanner } from "@/components/StickyCTABanner";
 
 const Features = () => {
   const coreFeatures = [
