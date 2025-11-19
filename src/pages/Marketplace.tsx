@@ -3,16 +3,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Plus, MapPin, Eye } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { StarRating } from "@/components/StarRating";
 import type { Tables } from "@/integrations/supabase/types";
 
 type MarketplaceListing = Tables<"marketplace_listings">;
 
 const Marketplace = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [listings, setListings] = useState<MarketplaceListing[]>([]);
 
   useEffect(() => {
@@ -85,13 +87,27 @@ const Marketplace = () => {
                     <MapPin className="h-4 w-4" />
                     {listing.location}
                   </div>
-                  {listing.views_count !== null && (
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Eye className="h-4 w-4" />
-                      {listing.views_count} views
-                    </div>
+                  {(listing.average_rating ?? 0) > 0 && (
+                    <StarRating
+                      rating={Number(listing.average_rating) || 0}
+                      showNumber
+                      reviewCount={listing.review_count ?? 0}
+                      size="sm"
+                    />
                   )}
-                  <Button variant="outline" className="w-full">
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    {listing.views_count !== null && (
+                      <div className="flex items-center gap-1">
+                        <Eye className="h-3 w-3" />
+                        {listing.views_count}
+                      </div>
+                    )}
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    className="w-full"
+                    onClick={() => navigate(`/marketplace/${listing.id}`)}
+                  >
                     View Details
                   </Button>
                 </CardContent>

@@ -20,6 +20,7 @@ import Breeding from "./pages/Breeding";
 import Feeding from "./pages/Feeding";
 import Marketplace from "./pages/Marketplace";
 import MarketplaceListing from "./pages/MarketplaceListing";
+import MarketplaceDetails from "./pages/MarketplaceDetails";
 import AIDoctor from "./pages/AIDoctor";
 import Schemes from "./pages/Schemes";
 import SchemeDetails from "./pages/SchemeDetails";
@@ -124,6 +125,7 @@ const App = () => (
             <Route path="/feeding" element={<ProtectedRoute><Feeding /></ProtectedRoute>} />
             <Route path="/marketplace" element={<ProtectedRoute><Marketplace /></ProtectedRoute>} />
             <Route path="/marketplace/create" element={<ProtectedRoute><MarketplaceListing /></ProtectedRoute>} />
+            <Route path="/marketplace/:id" element={<ProtectedRoute><MarketplaceDetails /></ProtectedRoute>} />
             <Route path="/ai-doctor" element={<ProtectedRoute><AIDoctor /></ProtectedRoute>} />
             <Route path="/schemes" element={<ProtectedRoute><Schemes /></ProtectedRoute>} />
             <Route path="/schemes/:id" element={<ProtectedRoute><SchemeDetails /></ProtectedRoute>} />
