@@ -1,10 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { User, Shield, Stethoscope, Target } from "lucide-react";
 
 const DemoLogin = () => {
   const navigate = useNavigate();
+
+  // SECURITY: Disable demo login in production
+  if (import.meta.env.PROD) {
+    return <Navigate to="/" replace />;
+  }
 
   const roles = [
     {

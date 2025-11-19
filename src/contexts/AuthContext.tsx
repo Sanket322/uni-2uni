@@ -76,14 +76,45 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await supabase.auth.signOut();
   };
 
-  const startImpersonation = (userId: string) => {
-    setImpersonatedUserId(userId);
-    setIsImpersonating(true);
+  const startImpersonation = async (userId: string) => {
+    try {
+      // SECURITY: Call server-side edge function for impersonation with audit logging
+      const { data, error } = await supabase.functions.invoke('impersonate-user', {
+        body: {
+          targetUserId: userId,
+          action: 'start'
+        }
+      });
+
+      if (error) {
+        console.error('Failed to start impersonation:', error);
+        return;
+      }
+
+      setImpersonatedUserId(userId);
+      setIsImpersonating(true);
+    } catch (error) {
+      console.error('Error starting impersonation:', error);
+    }
   };
 
-  const stopImpersonation = () => {
-    setImpersonatedUserId(null);
-    setIsImpersonating(false);
+  const stopImpersonation = async () => {
+    try {
+      if (impersonatedUserId) {
+        // SECURITY: Log impersonation end on server
+        await supabase.functions.invoke('impersonate-user', {
+          body: {
+            targetUserId: impersonatedUserId,
+            action: 'stop'
+          }
+        });
+      }
+    } catch (error) {
+      console.error('Error stopping impersonation:', error);
+    } finally {
+      setImpersonatedUserId(null);
+      setIsImpersonating(false);
+    }
   };
 
   return (
