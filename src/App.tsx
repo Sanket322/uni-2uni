@@ -25,6 +25,7 @@ import Feeding from "./pages/Feeding";
 import Marketplace from "./pages/Marketplace";
 import MarketplaceListing from "./pages/MarketplaceListing";
 import MarketplaceDetails from "./pages/MarketplaceDetails";
+import MyEnquiries from "./pages/MyEnquiries";
 import AIDoctor from "./pages/AIDoctor";
 import Schemes from "./pages/Schemes";
 import SchemeDetails from "./pages/SchemeDetails";
@@ -46,6 +47,7 @@ import ContentPage from "./pages/admin/ContentPage";
 import CommunityPage from "./pages/admin/CommunityPage";
 import Messages from "./pages/Messages";
 import MarketplacePage from "./pages/admin/MarketplacePage";
+import MarketplaceEnquiriesPage from "./pages/admin/MarketplaceEnquiriesPage";
 import NotificationsPage from "./pages/admin/NotificationsPage";
 import VeterinaryDashboard from "./pages/VeterinaryDashboard";
 import CoordinatorDashboard from "./pages/CoordinatorDashboard";
@@ -142,6 +144,7 @@ const App = () => (
             <Route path="/marketplace" element={<ProtectedRoute><Marketplace /></ProtectedRoute>} />
             <Route path="/marketplace/create" element={<ProtectedRoute><MarketplaceListing /></ProtectedRoute>} />
             <Route path="/marketplace/:id" element={<ProtectedRoute><MarketplaceDetails /></ProtectedRoute>} />
+            <Route path="/my-enquiries" element={<ProtectedRoute><MyEnquiries /></ProtectedRoute>} />
             <Route path="/ai-doctor" element={<ProtectedRoute><AIDoctor /></ProtectedRoute>} />
             <Route path="/schemes" element={<ProtectedRoute><Schemes /></ProtectedRoute>} />
             <Route path="/schemes/:id" element={<ProtectedRoute><SchemeDetails /></ProtectedRoute>} />
@@ -230,6 +233,16 @@ const App = () => (
                 <ProtectedRoute>
                   <RoleBasedRoute allowedRoles={["admin"]}>
                     <MarketplacePage />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/marketplace-enquiries"
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["admin"]}>
+                    <MarketplaceEnquiriesPage />
                   </RoleBasedRoute>
                 </ProtectedRoute>
               }
