@@ -2,6 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Smooth scroll with offset for sticky header */
+html {
+  scroll-padding-top: 80px;
+}
+
+@layer utilities {
+  /* Slide up animation for sticky banner */
+  @keyframes slide-in-up {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-slide-in-up {
+    animation: slide-in-up 0.3s ease-out;
+  }
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */

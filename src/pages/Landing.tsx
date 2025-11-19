@@ -25,6 +25,8 @@ import marketplaceImage from "@/assets/marketplace-feature.jpg";
 import farmerHeroImage from "@/assets/farmer-hero.jpg";
 import Footer from "@/components/Footer";
 import { Star } from "lucide-react";
+import { PublicHeader } from "@/components/PublicHeader";
+import { StickyCTABanner } from "@/components/StickyCTABanner";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -48,49 +50,8 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-        <div className="container flex h-16 items-center justify-between px-4">
-          <Link to="/" className="flex items-center gap-2">
-            <Heart className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">Animal Information System</span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link to="/#features" className="text-sm font-medium hover:text-primary transition-colors">
-              Features
-            </Link>
-            <Link to="/features" className="text-sm font-medium hover:text-primary transition-colors">
-              All Features
-            </Link>
-            <Link to="/about" className="text-sm font-medium hover:text-primary transition-colors">
-              About
-            </Link>
-            <Link to="/blog" className="text-sm font-medium hover:text-primary transition-colors">
-              Blog
-            </Link>
-            <Link to="/faq" className="text-sm font-medium hover:text-primary transition-colors">
-              FAQ
-            </Link>
-            <Link to="/contact" className="text-sm font-medium hover:text-primary transition-colors">
-              Contact
-            </Link>
-            <Link to="/demo-login">
-              <Button variant="secondary" size="sm">
-                Demo Login
-              </Button>
-            </Link>
-            <Link to="/admin-login">
-              <Button variant="outline" size="sm" className="gap-2">
-                <Shield className="h-4 w-4" />
-                Admin
-              </Button>
-            </Link>
-            <Link to="/auth">
-              <Button size="sm">Get Started</Button>
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <PublicHeader />
+      <StickyCTABanner />
 
       {/* Hero Section */}
       <section className="container px-4 py-20 md:py-32">

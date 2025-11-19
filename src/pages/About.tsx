@@ -4,46 +4,16 @@ import { Link } from "react-router-dom";
 import { Heart, Target, Eye, Award, ArrowLeft } from "lucide-react";
 import aboutHeroImage from "@/assets/about-hero.jpg";
 import Footer from "@/components/Footer";
+import { PublicHeader } from "@/components/PublicHeader";
+import { BreadcrumbNav } from "@/components/BreadcrumbNav";
+import { StickyCTABanner } from "@/components/StickyCTABanner";
 
 const About = () => {
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-        <div className="container flex h-16 items-center justify-between px-4">
-          <div className="flex items-center gap-4">
-            <Link to="/">
-              <Button variant="ghost" size="icon">
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-            </Link>
-            <div className="flex items-center gap-2">
-              <Heart className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold">Animal Information System</span>
-            </div>
-          </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">
-              Home
-            </Link>
-            <Link to="/features" className="text-sm font-medium hover:text-primary transition-colors">
-              Features
-            </Link>
-            <Link to="/blog" className="text-sm font-medium hover:text-primary transition-colors">
-              Blog
-            </Link>
-            <Link to="/faq" className="text-sm font-medium hover:text-primary transition-colors">
-              FAQ
-            </Link>
-            <Link to="/contact" className="text-sm font-medium hover:text-primary transition-colors">
-              Contact
-            </Link>
-            <Link to="/auth">
-              <Button>Get Started</Button>
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <PublicHeader />
+      <BreadcrumbNav />
+      <StickyCTABanner />
 
       {/* Hero Section */}
       <section className="container px-4 py-20">
