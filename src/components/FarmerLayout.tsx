@@ -10,7 +10,7 @@ import {
   Menu, Home, Beef, Heart, Syringe, Calendar, 
   ShoppingCart, MessageSquare, Award, Bell, 
   User, LogOut, CreditCard, BookOpen, Image,
-  Utensils, HelpCircle, Settings as SettingsIcon
+  Utensils, HelpCircle, Settings as SettingsIcon, Mail
 } from "lucide-react";
 
 interface FarmerLayoutProps {
@@ -32,6 +32,7 @@ const FarmerLayout = ({ children }: FarmerLayoutProps) => {
     { name: "Feeding", href: "/feeding", icon: Utensils },
     { name: "Marketplace", href: "/marketplace", icon: ShoppingCart },
     { name: "Community", href: "/social", icon: Image },
+    { name: "Messages", href: "/messages", icon: Mail },
     { name: "AI Doctor", href: "/ai-doctor", icon: MessageSquare },
     { name: "Content Library", href: "/content-library", icon: BookOpen },
     { name: "Schemes", href: "/schemes", icon: Award },

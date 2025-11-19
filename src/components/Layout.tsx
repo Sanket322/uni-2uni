@@ -28,6 +28,7 @@ import {
   BookOpen,
   HelpCircle,
   Settings,
+  Mail,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -52,6 +53,7 @@ const Layout = ({ children }: LayoutProps) => {
     { name: "Feeding", href: "/feeding", icon: UtensilsCrossed },
     { name: "Marketplace", href: "/marketplace", icon: ShoppingCart },
     { name: "Community", href: "/social", icon: Image },
+    { name: "Messages", href: "/messages", icon: Mail },
     { name: "AI Pashu Doctor", href: "/ai-doctor", icon: Bot },
     { name: "Content Library", href: "/content-library", icon: BookOpen },
     { name: "Gov. Schemes", href: "/schemes", icon: FileText },
