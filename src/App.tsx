@@ -29,6 +29,7 @@ import Notifications from "./pages/Notifications";
 import Emergency from "./pages/Emergency";
 import EnhancedEmergency from "./pages/EnhancedEmergency";
 import NotificationPreferences from "./pages/NotificationPreferences";
+import Settings from "./pages/Settings";
 import Analytics from "./pages/Analytics";
 import AdminDashboard from "./pages/AdminDashboard";
 import ReportsPage from "./pages/admin/ReportsPage";
@@ -133,6 +134,7 @@ const App = () => (
             <Route path="/schemes/:id" element={<ProtectedRoute><SchemeDetails /></ProtectedRoute>} />
             <Route path="/resources" element={<ProtectedRoute><ContentLibrary /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
             <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
             <Route path="/notification-preferences" element={<ProtectedRoute><NotificationPreferences /></ProtectedRoute>} />
             <Route path="/emergency" element={<ProtectedRoute><EnhancedEmergency /></ProtectedRoute>} />
