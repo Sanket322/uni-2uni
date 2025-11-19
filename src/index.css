@@ -147,3 +147,29 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* ReactQuill Editor Styles */
+.ql-container {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.ql-editor {
+  min-height: 200px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.ql-toolbar {
+  border-radius: 0.5rem 0.5rem 0 0;
+  background: hsl(var(--muted));
+}
+
+.ql-container {
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+.ql-editor.ql-blank::before {
+  color: hsl(var(--muted-foreground));
+  font-style: normal;
+}

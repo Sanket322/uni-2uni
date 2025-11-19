@@ -277,6 +277,78 @@ const Contact = () => {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="bg-muted/50 py-20">
+        <div className="container px-4">
+          <div className="max-w-4xl mx-auto space-y-8">
+            <div className="text-center space-y-4">
+              <h2 className="text-3xl md:text-5xl font-bold">Quick Answers</h2>
+              <p className="text-xl text-muted-foreground">
+                Common questions about getting help
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">What are your support hours?</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Our emergency helpline is available 24/7. Regular support is available from 9
+                    AM to 9 PM IST, all days of the week.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">How quickly will I get a response?</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    We typically respond to queries within 2-4 hours during business hours. Critical
+                    issues are addressed immediately via our emergency hotline.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Do you provide support in my language?</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Yes! We provide support in 11 Indian languages including Hindi, Marathi, Tamil,
+                    Telugu, Kannada, Malayalam, Gujarati, Punjabi, Bengali, Odia, and English.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Is technical support free?</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Yes, all basic technical support is included with your subscription. Premium
+                    support packages are available for enterprise users.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="text-center pt-8">
+              <Link to="/faq">
+                <Button size="lg" variant="outline">
+                  View All FAQs
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
