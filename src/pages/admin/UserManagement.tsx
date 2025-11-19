@@ -159,18 +159,17 @@ const UserManagement = () => {
         return;
       }
 
-      // Generate random password
-      const tempPassword = Math.random().toString(36).slice(-12) + "A1!";
-
-      // Create user
-      const { data: newUser, error: signUpError } = await supabase.auth.admin.createUser({
-        email: newAdminEmail,
-        password: tempPassword,
-        email_confirm: true,
-        user_metadata: {
-          full_name: newAdminName,
-        },
-      });
+      // SECURITY: Use password reset link instead of displaying password
+      // Send invitation email with reset link
+      const { data: newUser, error: signUpError } = await supabase.auth.admin.inviteUserByEmail(
+        newAdminEmail,
+        {
+          data: {
+            full_name: newAdminName,
+          },
+          redirectTo: `${window.location.origin}/auth`,
+        }
+      );
 
       if (signUpError) throw signUpError;
 
@@ -183,9 +182,9 @@ const UserManagement = () => {
         if (roleError) throw roleError;
 
         toast({
-          title: "Admin Created",
-          description: `Admin account created. Temporary Password: ${tempPassword}`,
-          duration: 10000,
+          title: "Admin Invited",
+          description: `Admin invitation sent to ${newAdminEmail}. They will receive a password reset link via email.`,
+          duration: 5000,
         });
 
         setCreateAdminOpen(false);

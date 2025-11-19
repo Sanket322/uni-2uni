@@ -10,6 +10,20 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
+
+// SECURITY: Input validation schema
+const listingSchema = z.object({
+  title: z.string().trim().min(5, "Title must be at least 5 characters").max(100, "Title must be less than 100 characters"),
+  description: z.string().trim().max(2000, "Description must be less than 2000 characters").optional(),
+  price: z.string().optional().refine((val) => {
+    if (!val) return true;
+    const num = parseFloat(val);
+    return !isNaN(num) && num > 0 && num <= 10000000;
+  }, "Price must be between 0 and 10,000,000"),
+  location: z.string().trim().min(3, "Location must be at least 3 characters").max(200, "Location must be less than 200 characters"),
+  contact_number: z.string().regex(/^[0-9]{10}$/, "Contact number must be exactly 10 digits"),
+});
 
 const MarketplaceListing = () => {
   const { user } = useAuth();
@@ -28,34 +42,50 @@ const MarketplaceListing = () => {
     e.preventDefault();
     if (!user) return;
 
-    setLoading(true);
+    // SECURITY: Validate input before submission
+    try {
+      const validatedData = listingSchema.parse(formData);
+      
+      setLoading(true);
 
-    const { error } = await supabase.from("marketplace_listings").insert([
-      {
-        ...formData,
-        price: formData.price ? parseFloat(formData.price) : null,
-        seller_id: user.id,
-        status: "active",
-      },
-    ]);
+      const { error } = await supabase.from("marketplace_listings").insert([
+        {
+          title: validatedData.title,
+          description: validatedData.description || null,
+          price: validatedData.price ? parseFloat(validatedData.price) : null,
+          location: validatedData.location,
+          contact_number: validatedData.contact_number,
+          seller_id: user.id,
+          status: "active",
+        },
+      ]);
 
-    setLoading(false);
+      setLoading(false);
 
-    if (error) {
+      if (error) {
+        toast({
+          title: "Error",
+          description: "Failed to create listing",
+          variant: "destructive",
+        });
+        return;
+      }
+
       toast({
-        title: "Error",
-        description: "Failed to create listing",
-        variant: "destructive",
+        title: "Success",
+        description: "Listing created successfully",
       });
-      return;
+
+      navigate("/marketplace");
+    } catch (validationError) {
+      if (validationError instanceof z.ZodError) {
+        toast({
+          title: "Validation Error",
+          description: validationError.errors[0].message,
+          variant: "destructive",
+        });
+      }
     }
-
-    toast({
-      title: "Success",
-      description: "Listing created successfully",
-    });
-
-    navigate("/marketplace");
   };
 
   return (
