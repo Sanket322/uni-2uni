@@ -22,6 +22,7 @@ import landingHeroImage from "@/assets/landing-hero.jpg";
 import aiDoctorImage from "@/assets/ai-doctor-feature.jpg";
 import multilingualImage from "@/assets/multilingual-feature.jpg";
 import marketplaceImage from "@/assets/marketplace-feature.jpg";
+import Footer from "@/components/Footer";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -421,6 +422,8 @@ const Landing = () => {
           </div>
         </div>
       </footer>
+
+      <Footer />
     </div>
   );
 };

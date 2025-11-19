@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 import contactHeroImage from "@/assets/contact-hero.jpg";
+import Footer from "@/components/Footer";
 
 const feedbackSchema = z.object({
   category: z.enum(["general", "technical", "feature", "billing", "other"]),
@@ -276,12 +277,7 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t py-12 bg-muted/50">
-        <div className="container px-4 text-center text-sm text-muted-foreground">
-          <p>© 2024 Reliance Foundation. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

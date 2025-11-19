@@ -8,6 +8,9 @@ import Index from "./pages/Index";
 import Landing from "./pages/Landing";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+import FAQ from "./pages/FAQ";
 import Auth from "./pages/Auth";
 import AdminAuth from "./pages/AdminAuth";
 import Dashboard from "./pages/Dashboard";
@@ -74,6 +77,9 @@ const App = () => (
             <Route path="/app" element={<Index />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogPost />} />
+            <Route path="/faq" element={<FAQ />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin-login" element={<AdminAuth />} />
             <Route path="/demo-login" element={<DemoLogin />} />
