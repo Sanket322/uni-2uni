@@ -23,6 +23,7 @@ import aiDoctorImage from "@/assets/ai-doctor-feature.jpg";
 import multilingualImage from "@/assets/multilingual-feature.jpg";
 import marketplaceImage from "@/assets/marketplace-feature.jpg";
 import Footer from "@/components/Footer";
+import { Star } from "lucide-react";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -324,6 +325,111 @@ const Landing = () => {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section className="bg-muted/50 py-20">
+        <div className="container px-4">
+          <div className="max-w-6xl mx-auto space-y-12">
+            <div className="text-center space-y-4">
+              <h2 className="text-3xl md:text-5xl font-bold">Farmer Success Stories</h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                See how AIS has transformed livestock management for farmers across India
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Testimonial 1 */}
+              <Card>
+                <CardContent className="pt-6 space-y-4">
+                  <div className="flex gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground">
+                    "The AI doctor feature saved my cow's life. I got instant advice when she fell sick at midnight. This app is a blessing for rural farmers like me."
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                      <User className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-semibold">Ramesh Kumar</p>
+                      <p className="text-sm text-muted-foreground">Dairy Farmer, Punjab</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Testimonial 2 */}
+              <Card>
+                <CardContent className="pt-6 space-y-4">
+                  <div className="flex gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground">
+                    "I sold my buffaloes at a fair price through the marketplace. The multilingual support in Marathi made it so easy to use."
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                      <User className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-semibold">Sunita Patil</p>
+                      <p className="text-sm text-muted-foreground">Buffalo Owner, Maharashtra</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Testimonial 3 */}
+              <Card>
+                <CardContent className="pt-6 space-y-4">
+                  <div className="flex gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground">
+                    "Vaccination reminders and health tracking helped reduce disease in my herd by 60%. My livestock income has doubled!"
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                      <User className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-semibold">Vijay Singh</p>
+                      <p className="text-sm text-muted-foreground">Cattle Farmer, Rajasthan</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Stats Section */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12">
+              <div className="text-center space-y-2">
+                <p className="text-4xl font-bold text-primary">50,000+</p>
+                <p className="text-muted-foreground">Active Farmers</p>
+              </div>
+              <div className="text-center space-y-2">
+                <p className="text-4xl font-bold text-primary">200,000+</p>
+                <p className="text-muted-foreground">Animals Tracked</p>
+              </div>
+              <div className="text-center space-y-2">
+                <p className="text-4xl font-bold text-primary">4.8/5</p>
+                <p className="text-muted-foreground">Average Rating</p>
+              </div>
+              <div className="text-center space-y-2">
+                <p className="text-4xl font-bold text-primary">11</p>
+                <p className="text-muted-foreground">Languages</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="bg-primary text-primary-foreground py-20">
         <div className="container px-4 text-center space-y-8">
@@ -347,81 +453,6 @@ const Landing = () => {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t py-12 bg-muted/50">
-        <div className="container px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <Heart className="h-5 w-5 text-primary" />
-                <span className="font-bold">AIS</span>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Empowering farmers with digital livestock management solutions.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Product</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <Link to="#features" className="hover:text-foreground">
-                    Features
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/schemes" className="hover:text-foreground">
-                    Government Schemes
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/marketplace" className="hover:text-foreground">
-                    Marketplace
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Support</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <Link to="/emergency" className="hover:text-foreground">
-                    Emergency Contacts
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/ai-doctor" className="hover:text-foreground">
-                    AI Doctor
-                  </Link>
-                </li>
-                <li>
-                  <Link to="#contact" className="hover:text-foreground">
-                    Contact Us
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Legal</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <a href="#" className="hover:text-foreground">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-foreground">
-                    Terms of Service
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-            <p>© 2024 Reliance Foundation. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
 
       <Footer />
     </div>

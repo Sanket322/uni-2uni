@@ -26,6 +26,8 @@ import { Switch } from "@/components/ui/switch";
 import { Plus, Search, Edit, Trash2, Eye, FileText } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { z } from "zod";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const urlSchema = z.string().url().max(500).optional().or(z.literal(""));
 
@@ -358,15 +360,30 @@ const ContentManagement = () => {
                 </div>
 
                 <div className="col-span-2">
-                  <Label htmlFor="content_body">Content Body</Label>
-                  <Textarea
-                    id="content_body"
-                    value={formData.content_body}
-                    onChange={(e) =>
-                      setFormData({ ...formData, content_body: e.target.value })
-                    }
-                    rows={6}
-                  />
+                  <Label htmlFor="content_body">Content Body (Rich Text Editor)</Label>
+                  <div className="border rounded-md min-h-[300px]">
+                    <ReactQuill
+                      theme="snow"
+                      value={formData.content_body}
+                      onChange={(value) =>
+                        setFormData({ ...formData, content_body: value })
+                      }
+                      modules={{
+                        toolbar: [
+                          [{ header: [1, 2, 3, false] }],
+                          ["bold", "italic", "underline", "strike"],
+                          [{ list: "ordered" }, { list: "bullet" }],
+                          ["blockquote", "code-block"],
+                          [{ color: [] }, { background: [] }],
+                          ["link", "image", "video"],
+                          [{ align: [] }],
+                          ["clean"],
+                        ],
+                      }}
+                      placeholder="Enter the main content with rich formatting..."
+                      className="h-64"
+                    />
+                  </div>
                 </div>
 
                 <div>
