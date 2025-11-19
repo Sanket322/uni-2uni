@@ -24,6 +24,7 @@ import {
   Activity,
   MessageSquare,
   Image,
+  Mail,
 } from "lucide-react";
 
 const adminMenuItems = [
@@ -91,6 +92,12 @@ const adminMenuItems = [
     title: "Helpdesk",
     url: "/admin/helpdesk",
     icon: MessageSquare,
+    group: "Support",
+  },
+  {
+    title: "Messages",
+    url: "/messages",
+    icon: Mail,
     group: "Support",
   },
 ];

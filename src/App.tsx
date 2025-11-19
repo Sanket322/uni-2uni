@@ -44,6 +44,7 @@ import SubscriptionsPage from "./pages/admin/SubscriptionsPage";
 import SchemesPage from "./pages/admin/SchemesPage";
 import ContentPage from "./pages/admin/ContentPage";
 import CommunityPage from "./pages/admin/CommunityPage";
+import Messages from "./pages/Messages";
 import MarketplacePage from "./pages/admin/MarketplacePage";
 import NotificationsPage from "./pages/admin/NotificationsPage";
 import VeterinaryDashboard from "./pages/VeterinaryDashboard";
@@ -136,7 +137,8 @@ const App = () => (
             <Route path="/vaccinations" element={<ProtectedRoute><Vaccinations /></ProtectedRoute>} />
             <Route path="/breeding" element={<ProtectedRoute><Breeding /></ProtectedRoute>} />
             <Route path="/feeding" element={<ProtectedRoute><Feeding /></ProtectedRoute>} />
-            <Route path="/social" element={<ProtectedRoute><SocialFeed /></ProtectedRoute>} />
+          <Route path="/social" element={<ProtectedRoute><SocialFeed /></ProtectedRoute>} />
+          <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
             <Route path="/marketplace" element={<ProtectedRoute><Marketplace /></ProtectedRoute>} />
             <Route path="/marketplace/create" element={<ProtectedRoute><MarketplaceListing /></ProtectedRoute>} />
             <Route path="/marketplace/:id" element={<ProtectedRoute><MarketplaceDetails /></ProtectedRoute>} />
