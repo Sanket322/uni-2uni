@@ -22,6 +22,7 @@ import {
   BarChart3,
   Shield,
   Activity,
+  MessageSquare,
 } from "lucide-react";
 
 const adminMenuItems = [
@@ -78,6 +79,12 @@ const adminMenuItems = [
     url: "/admin/notifications",
     icon: Bell,
     group: "Operations",
+  },
+  {
+    title: "Helpdesk",
+    url: "/admin/helpdesk",
+    icon: MessageSquare,
+    group: "Support",
   },
 ];
 

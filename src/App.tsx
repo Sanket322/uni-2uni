@@ -48,6 +48,12 @@ import AddVaccination from "./pages/vet/AddVaccination";
 import Onboarding from "./pages/Onboarding";
 import ContentLibrary from "./pages/ContentLibrary";
 import DemoLogin from "./pages/DemoLogin";
+import Helpdesk from "./pages/Helpdesk";
+import SubmitTicket from "./pages/SubmitTicket";
+import TicketDetails from "./pages/TicketDetails";
+import HelpdeskPage from "./pages/admin/HelpdeskPage";
+import SLAConfiguration from "./pages/admin/SLAConfiguration";
+import AdminTicketDetails from "./pages/admin/AdminTicketDetails";
 
 const queryClient = new QueryClient();
 
@@ -217,6 +223,39 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/admin/helpdesk"
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["admin"]}>
+                    <HelpdeskPage />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/sla-configuration"
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["admin"]}>
+                    <SLAConfiguration />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/ticket/:ticketId"
+              element={
+                <ProtectedRoute>
+                  <RoleBasedRoute allowedRoles={["admin"]}>
+                    <AdminTicketDetails />
+                  </RoleBasedRoute>
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/helpdesk" element={<ProtectedRoute><Helpdesk /></ProtectedRoute>} />
+            <Route path="/submit-ticket" element={<ProtectedRoute><SubmitTicket /></ProtectedRoute>} />
+            <Route path="/ticket/:ticketId" element={<ProtectedRoute><TicketDetails /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
             </Routes>
           </OnboardingGuard>
