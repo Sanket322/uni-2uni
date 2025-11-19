@@ -25,6 +25,9 @@ import {
   Stethoscope,
   Target,
   Image,
+  BookOpen,
+  HelpCircle,
+  Settings,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -50,9 +53,12 @@ const Layout = ({ children }: LayoutProps) => {
     { name: "Marketplace", href: "/marketplace", icon: ShoppingCart },
     { name: "Community", href: "/social", icon: Image },
     { name: "AI Pashu Doctor", href: "/ai-doctor", icon: Bot },
+    { name: "Content Library", href: "/content-library", icon: BookOpen },
     { name: "Gov. Schemes", href: "/schemes", icon: FileText },
     { name: "Emergency", href: "/emergency", icon: Phone },
+    { name: "Helpdesk", href: "/helpdesk", icon: HelpCircle },
     { name: "Analytics", href: "/analytics", icon: BarChart3 },
+    { name: "Settings", href: "/settings", icon: Settings },
     ...(isAdmin ? [{ name: "Admin", href: "/admin", icon: Shield }] : []),
   ];
 
@@ -117,7 +123,7 @@ const Layout = ({ children }: LayoutProps) => {
           </Link>
           <Button 
             variant="outline" 
-            className="w-full justify-start" 
+            className="w-full justify-start text-destructive hover:text-destructive" 
             onClick={() => signOut()}
           >
             <LogOut className="mr-2 h-4 w-4" />
