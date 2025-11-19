@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
+import contactHeroImage from "@/assets/contact-hero.jpg";
 
 const feedbackSchema = z.object({
   category: z.enum(["general", "technical", "feature", "billing", "other"]),
@@ -94,11 +95,20 @@ const Contact = () => {
       {/* Contact Section */}
       <section className="container px-4 py-20">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center space-y-4 mb-16">
-            <h1 className="text-4xl md:text-6xl font-bold">Contact Us</h1>
-            <p className="text-xl text-muted-foreground">
-              We're here to help. Reach out to us through any of the channels below.
-            </p>
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+            <div className="space-y-4">
+              <h1 className="text-4xl md:text-6xl font-bold">Contact Us</h1>
+              <p className="text-xl text-muted-foreground">
+                We're here to help. Reach out to us through any of the channels below.
+              </p>
+            </div>
+            <div>
+              <img 
+                src={contactHeroImage} 
+                alt="Customer support representative ready to help farmers"
+                className="rounded-2xl shadow-2xl w-full h-auto"
+              />
+            </div>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12">

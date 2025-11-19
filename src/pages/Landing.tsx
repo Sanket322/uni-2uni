@@ -18,6 +18,10 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useEffect } from "react";
 import LanguageSelector from "@/components/LanguageSelector";
+import landingHeroImage from "@/assets/landing-hero.jpg";
+import aiDoctorImage from "@/assets/ai-doctor-feature.jpg";
+import multilingualImage from "@/assets/multilingual-feature.jpg";
+import marketplaceImage from "@/assets/marketplace-feature.jpg";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -52,10 +56,10 @@ const Landing = () => {
             <Link to="#features" className="text-sm font-medium hover:text-primary">
               Features
             </Link>
-            <Link to="#about" className="text-sm font-medium hover:text-primary">
+            <Link to="/about" className="text-sm font-medium hover:text-primary">
               About
             </Link>
-            <Link to="#contact" className="text-sm font-medium hover:text-primary">
+            <Link to="/contact" className="text-sm font-medium hover:text-primary">
               Contact
             </Link>
             <Link to="/demo-login">
@@ -79,7 +83,7 @@ const Landing = () => {
       {/* Hero Section */}
       <section className="container px-4 py-20 md:py-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
+          <div className="space-y-8 order-2 lg:order-1">
             <div className="inline-block">
               <div className="px-4 py-2 bg-primary/10 rounded-full text-sm font-medium text-primary">
                 Powered by Reliance Foundation
@@ -158,10 +162,13 @@ const Landing = () => {
               </div>
             </div>
           </div>
-          <div className="relative">
-            <div className="relative z-10 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl p-8 backdrop-blur">
-              <Smartphone className="h-64 w-full text-primary" />
-            </div>
+          <div className="relative order-1 lg:order-2 space-y-4">
+            <LanguageSelector />
+            <img 
+              src={landingHeroImage} 
+              alt="Happy Indian farmers with livestock using digital technology"
+              className="rounded-2xl shadow-2xl w-full h-auto"
+            />
           </div>
         </div>
       </section>
