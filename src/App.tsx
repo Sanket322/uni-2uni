@@ -27,6 +27,8 @@ import SchemeDetails from "./pages/SchemeDetails";
 import Profile from "./pages/Profile";
 import Notifications from "./pages/Notifications";
 import Emergency from "./pages/Emergency";
+import EnhancedEmergency from "./pages/EnhancedEmergency";
+import NotificationPreferences from "./pages/NotificationPreferences";
 import Analytics from "./pages/Analytics";
 import AdminDashboard from "./pages/AdminDashboard";
 import ReportsPage from "./pages/admin/ReportsPage";
@@ -132,7 +134,9 @@ const App = () => (
             <Route path="/resources" element={<ProtectedRoute><ContentLibrary /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
-            <Route path="/emergency" element={<ProtectedRoute><Emergency /></ProtectedRoute>} />
+            <Route path="/notification-preferences" element={<ProtectedRoute><NotificationPreferences /></ProtectedRoute>} />
+            <Route path="/emergency" element={<ProtectedRoute><EnhancedEmergency /></ProtectedRoute>} />
+            <Route path="/emergency-old" element={<ProtectedRoute><Emergency /></ProtectedRoute>} />
             <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
             <Route path="/plans" element={<ProtectedRoute><Plans /></ProtectedRoute>} />
             <Route
