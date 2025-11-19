@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { Heart, Target, Eye, Award, ArrowLeft } from "lucide-react";
+import aboutHeroImage from "@/assets/about-hero.jpg";
 
 const About = () => {
   return (
@@ -28,12 +29,23 @@ const About = () => {
 
       {/* Hero Section */}
       <section className="container px-4 py-20">
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <h1 className="text-4xl md:text-6xl font-bold">About AIS</h1>
-          <p className="text-xl text-muted-foreground">
-            A Reliance Foundation initiative to empower rural livestock farmers through digital
-            technology and AI-powered solutions.
-          </p>
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-12">
+            <div className="space-y-6">
+              <h1 className="text-4xl md:text-6xl font-bold">About AIS</h1>
+              <p className="text-xl text-muted-foreground">
+                A Reliance Foundation initiative to empower rural livestock farmers through digital
+                technology and AI-powered solutions.
+              </p>
+            </div>
+            <div>
+              <img 
+                src={aboutHeroImage} 
+                alt="Team of farmers, veterinarians, and livestock representing our mission"
+                className="rounded-2xl shadow-2xl w-full h-auto"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
