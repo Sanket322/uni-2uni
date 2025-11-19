@@ -30,6 +30,7 @@ const FarmerLayout = ({ children }: FarmerLayoutProps) => {
     { name: "Breeding", href: "/breeding", icon: Calendar },
     { name: "Marketplace", href: "/marketplace", icon: ShoppingCart },
     { name: "AI Doctor", href: "/ai-doctor", icon: MessageSquare },
+    { name: "Notifications", href: "/notifications", icon: Bell },
     { name: "Resources", href: "/resources", icon: BookOpen },
     { name: "Schemes", href: "/schemes", icon: Award },
     { name: "Plans", href: "/plans", icon: CreditCard },
