@@ -34,6 +34,7 @@ import Emergency from "./pages/Emergency";
 import EnhancedEmergency from "./pages/EnhancedEmergency";
 import NotificationPreferences from "./pages/NotificationPreferences";
 import Settings from "./pages/Settings";
+import SocialFeed from "./pages/SocialFeed";
 import Analytics from "./pages/Analytics";
 import AdminDashboard from "./pages/AdminDashboard";
 import ReportsPage from "./pages/admin/ReportsPage";
@@ -134,6 +135,7 @@ const App = () => (
             <Route path="/vaccinations" element={<ProtectedRoute><Vaccinations /></ProtectedRoute>} />
             <Route path="/breeding" element={<ProtectedRoute><Breeding /></ProtectedRoute>} />
             <Route path="/feeding" element={<ProtectedRoute><Feeding /></ProtectedRoute>} />
+            <Route path="/social" element={<ProtectedRoute><SocialFeed /></ProtectedRoute>} />
             <Route path="/marketplace" element={<ProtectedRoute><Marketplace /></ProtectedRoute>} />
             <Route path="/marketplace/create" element={<ProtectedRoute><MarketplaceListing /></ProtectedRoute>} />
             <Route path="/marketplace/:id" element={<ProtectedRoute><MarketplaceDetails /></ProtectedRoute>} />

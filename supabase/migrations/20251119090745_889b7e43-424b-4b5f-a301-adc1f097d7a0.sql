@@ -1,0 +1,20 @@
+-- Add foreign key relationship between post_comments and profiles
+ALTER TABLE public.post_comments
+ADD CONSTRAINT post_comments_user_id_fkey 
+FOREIGN KEY (user_id) 
+REFERENCES auth.users(id) 
+ON DELETE CASCADE;
+
+-- Add foreign key relationship between posts and profiles
+ALTER TABLE public.posts
+ADD CONSTRAINT posts_user_id_fkey 
+FOREIGN KEY (user_id) 
+REFERENCES auth.users(id) 
+ON DELETE CASCADE;
+
+-- Add foreign key relationship between post_likes and profiles
+ALTER TABLE public.post_likes
+ADD CONSTRAINT post_likes_user_id_fkey 
+FOREIGN KEY (user_id) 
+REFERENCES auth.users(id) 
+ON DELETE CASCADE;
