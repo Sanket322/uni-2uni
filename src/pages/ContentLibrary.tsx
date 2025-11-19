@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import DOMPurify from "dompurify";
 import FarmerLayout from "@/components/FarmerLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -365,7 +366,9 @@ const ContentLibrary = () => {
                   <div className="prose prose-sm max-w-none">
                     <div
                       dangerouslySetInnerHTML={{
-                        __html: selectedContent.content_body.replace(/\n/g, "<br />"),
+                        __html: DOMPurify.sanitize(
+                          selectedContent.content_body.replace(/\n/g, "<br />")
+                        ),
                       }}
                     />
                   </div>

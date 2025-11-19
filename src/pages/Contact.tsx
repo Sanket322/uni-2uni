@@ -8,6 +8,16 @@ import { Heart, ArrowLeft, Mail, Phone, MapPin, MessageSquare } from "lucide-rea
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+const feedbackSchema = z.object({
+  category: z.enum(["general", "technical", "feature", "billing", "other"]),
+  comments: z.string()
+    .trim()
+    .min(10, "Comments must be at least 10 characters")
+    .max(2000, "Comments must be less than 2000 characters"),
+  rating: z.number().int().min(1).max(5)
+});
 
 const Contact = () => {
   const { toast } = useToast();
@@ -20,32 +30,43 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
 
-    const { error } = await supabase.from("feedback").insert([
-      {
-        ...formData,
-        rating: parseInt(formData.rating.toString()),
-      },
-    ]);
-
-    setLoading(false);
-
-    if (error) {
-      toast({
-        title: "Error",
-        description: "Failed to submit feedback. Please try again.",
-        variant: "destructive",
+    try {
+      const validatedData = feedbackSchema.parse({
+        category: formData.category,
+        comments: formData.comments,
+        rating: parseInt(formData.rating.toString())
       });
-      return;
+
+      setLoading(true);
+
+      const { error } = await supabase.from("feedback").insert([validatedData]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Thank you for your feedback! We'll get back to you soon.",
+      });
+
+      setFormData({ category: "general", comments: "", rating: 5 });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast({
+          title: "Validation Error",
+          description: error.errors[0].message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to submit feedback. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } finally {
+      setLoading(false);
     }
-
-    toast({
-      title: "Success",
-      description: "Thank you for your feedback! We'll get back to you soon.",
-    });
-
-    setFormData({ category: "general", comments: "", rating: 5 });
   };
 
   return (

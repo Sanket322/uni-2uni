@@ -25,6 +25,26 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Plus, Search, Edit, Trash2, Eye, FileText } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { z } from "zod";
+
+const urlSchema = z.string().url().max(500).optional().or(z.literal(""));
+
+const contentSchema = z.object({
+  title: z.string().trim().min(1, "Title is required").max(200, "Title must be less than 200 characters"),
+  description: z.string().trim().max(500, "Description must be less than 500 characters").optional(),
+  content_body: z.string().max(50000, "Content must be less than 50,000 characters").optional(),
+  category: z.string().min(1, "Category is required"),
+  content_type: z.string().min(1, "Content type is required"),
+  media_url: urlSchema,
+  thumbnail_url: urlSchema,
+  download_url: urlSchema,
+  tags: z.string().max(500).optional(),
+  state: z.string().max(50).optional(),
+  district: z.string().max(50).optional(),
+  language: z.string().max(10),
+  is_active: z.boolean(),
+  is_featured: z.boolean()
+});
 
 const categories = [
   { value: "feeding_guidelines", label: "Feeding Guidelines" },
@@ -130,63 +150,85 @@ const ContentManagement = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const tagsArray = formData.tags ? formData.tags.split(",").map((t) => t.trim()) : [];
 
-    const contentData: any = {
-      title: formData.title,
-      description: formData.description,
-      content_body: formData.content_body,
-      category: formData.category,
-      content_type: formData.content_type,
-      species: formData.species,
-      state: formData.state || null,
-      district: formData.district || null,
-      language: formData.language,
-      media_url: formData.media_url || null,
-      thumbnail_url: formData.thumbnail_url || null,
-      download_url: formData.download_url || null,
-      tags: tagsArray,
-      is_active: formData.is_active,
-      is_featured: formData.is_featured,
-      published_date: new Date().toISOString(),
-    };
+    try {
+      const tagsArray = formData.tags ? formData.tags.split(",").map((t) => t.trim()).filter(t => t.length > 0).slice(0, 10) : [];
 
-    if (editingContent) {
-      const { error } = await supabase
-        .from("cms_content")
-        .update(contentData)
-        .eq("id", editingContent.id);
+      const validatedData = contentSchema.parse({
+        title: formData.title,
+        description: formData.description || undefined,
+        content_body: formData.content_body || undefined,
+        category: formData.category,
+        content_type: formData.content_type,
+        media_url: formData.media_url || "",
+        thumbnail_url: formData.thumbnail_url || "",
+        download_url: formData.download_url || "",
+        tags: formData.tags,
+        state: formData.state,
+        district: formData.district,
+        language: formData.language,
+        is_active: formData.is_active,
+        is_featured: formData.is_featured
+      });
 
-      if (error) {
-        toast({
-          title: "Error",
-          description: "Failed to update content",
-          variant: "destructive",
-        });
-      } else {
+      const contentData: any = {
+        title: validatedData.title,
+        description: validatedData.description,
+        content_body: validatedData.content_body,
+        category: validatedData.category,
+        content_type: validatedData.content_type,
+        species: formData.species,
+        state: validatedData.state || null,
+        district: validatedData.district || null,
+        language: validatedData.language,
+        media_url: validatedData.media_url || null,
+        thumbnail_url: validatedData.thumbnail_url || null,
+        download_url: validatedData.download_url || null,
+        tags: tagsArray,
+        is_active: validatedData.is_active,
+        is_featured: validatedData.is_featured,
+        published_date: new Date().toISOString(),
+      };
+
+      if (editingContent) {
+        const { error } = await supabase
+          .from("cms_content")
+          .update(contentData)
+          .eq("id", editingContent.id);
+
+        if (error) throw error;
+
         toast({
           title: "Success",
           description: "Content updated successfully",
         });
-        resetForm();
-        fetchContents();
-      }
-    } else {
-      const { error } = await supabase.from("cms_content").insert([contentData]);
-
-      if (error) {
-        toast({
-          title: "Error",
-          description: "Failed to create content",
-          variant: "destructive",
-        });
       } else {
+        const { error } = await supabase.from("cms_content").insert(contentData);
+
+        if (error) throw error;
+
         toast({
           title: "Success",
           description: "Content created successfully",
         });
-        resetForm();
-        fetchContents();
+      }
+
+      setDialogOpen(false);
+      resetForm();
+      fetchContents();
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast({
+          title: "Validation Error",
+          description: error.errors[0].message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to save content",
+          variant: "destructive",
+        });
       }
     }
   };

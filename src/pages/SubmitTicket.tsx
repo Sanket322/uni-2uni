@@ -10,6 +10,20 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft } from "lucide-react";
+import { z } from "zod";
+
+const ticketSchema = z.object({
+  subject: z.string()
+    .trim()
+    .min(5, "Subject must be at least 5 characters")
+    .max(200, "Subject must be less than 200 characters"),
+  description: z.string()
+    .trim()
+    .min(10, "Description must be at least 10 characters")
+    .max(5000, "Description must be less than 5000 characters"),
+  category: z.string().trim().max(50).optional(),
+  priority: z.enum(["low", "medium", "high", "critical"])
+});
 
 const SubmitTicket = () => {
   const navigate = useNavigate();
@@ -27,14 +41,21 @@ const SubmitTicket = () => {
     e.preventDefault();
     if (!user?.id) return;
 
-    setLoading(true);
     try {
-      const { error } = await supabase.from("helpdesk_tickets").insert({
-        user_id: user.id,
+      const validatedData = ticketSchema.parse({
         subject: formData.subject,
         description: formData.description,
-        category: formData.category || null,
-        priority: formData.priority,
+        category: formData.category || undefined,
+        priority: formData.priority
+      });
+
+      setLoading(true);
+      const { error } = await supabase.from("helpdesk_tickets").insert({
+        user_id: user.id,
+        subject: validatedData.subject,
+        description: validatedData.description,
+        category: validatedData.category || null,
+        priority: validatedData.priority,
         status: "open",
       });
 
@@ -46,11 +67,19 @@ const SubmitTicket = () => {
       });
       navigate("/helpdesk");
     } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
+      if (error instanceof z.ZodError) {
+        toast({
+          title: "Validation Error",
+          description: error.errors[0].message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     } finally {
       setLoading(false);
     }
