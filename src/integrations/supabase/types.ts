@@ -778,6 +778,7 @@ export type Database = {
           id: string
           listing_id: string
           message: string
+          reminder_sent: boolean | null
           status: string
           updated_at: string
         }
@@ -790,6 +791,7 @@ export type Database = {
           id?: string
           listing_id: string
           message: string
+          reminder_sent?: boolean | null
           status?: string
           updated_at?: string
         }
@@ -802,6 +804,7 @@ export type Database = {
           id?: string
           listing_id?: string
           message?: string
+          reminder_sent?: boolean | null
           status?: string
           updated_at?: string
         }
